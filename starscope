@@ -1,0 +1,246 @@
+#! /usr/bin/env bash
+
+## Main script of starscope
+## check dependency and invoke nextflow pipeline
+
+set -eo pipefail
+
+usage(){
+    cat <<-EOF
+	starscope uses starsolo and Seurat package as the core modules to process
+	scRNA-seq data and generate a concise html report. The workflow was
+	implemented by nextflow.
+	
+	Running pipeline:
+	starscope <run> --conda \\
+	                --input sampleList.csv \\
+	                --genomeDir /path/to/STAR/reference \\
+	                --genomeGTF /path/to/genomeGTF \\
+	                --whitelist /path/to/whitelist \\
+	                --trimLength 50 \\
+	                --soloCBstart 1 \\
+	                --soloCBlen 16 \\
+	                --soloUMIstart 17 \\
+	                --soloUMIlen = 12 \\
+	                -bg
+	
+	Example input list (csv):
+	sample,fastq_1,fastq_2
+	sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz
+	
+	Making Reference:
+	starscope <mkref> xxx [output_report.html]
+	
+	starscope has two valid subcommands:
+	    run:
+	        run the scRNAseq analysis pipeline with nextflow
+	    mkref:
+	        prepare STAR reference
+	
+	Please use -h option following each subcommand to get detail of the options:
+	    e.g. starscope run -h
+	EOF
+
+    exit 0;
+}
+
+run_usage(){
+    cat <<-EOF
+	help message for starscope run
+	EOF
+}
+
+mkref_usage(){
+    cat <<-EOF
+	help message for starscope mkref
+	EOF
+}
+
+check_java(){
+    ## Check if java is installed
+    echo "Checking Java..."
+    if [[ -z $(which java) ]]
+    then
+        echo "Please install java 8 or higher"
+        exit 1
+    else
+        java_version_string=$(java --version 2>&1 | head -1 | awk '{print $2}')
+        java_version=$(echo $java_version_string | awk '{split($1,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}else{print tmp[1]}}')
+
+        if [[ $java_version == "1.8" ]] || [[ $java_version -ge 9 ]]
+        then
+            echo "Java version: $java_version"
+        else
+            echo "Please install java 8 or higher"
+            exit 1
+        fi
+    fi
+}
+
+check_nextflow(){
+    ## Check if nextflow is installed
+    echo "Checking nextflow..."
+    if [[ -z $(which nextflow) ]]
+    then
+        echo "No nextflow detected, installing..."
+        curl -s https://get.nextflow.io | bash
+    else
+        echo "Nextflow installed: "$(which nextflow)
+    fi
+}
+
+check_conda(){
+    ## Check if conda is installed
+    ## Check if env is ready
+    echo "Checking conda and conda env..."
+    if [[ -z $(which conda) ]]
+    then
+        echo "Please install conda first: https://docs.conda.io/en/latest/miniconda.html"
+        exit 1
+    else
+        echo "Conda installed: "$(which conda)
+        conda_env=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $1}')
+        if [[ -z $conda_env ]]
+        then
+            echo "Preparing conda env..."
+            ## use mamba if installed
+            if [[ -n $(which mamba) ]]
+            then
+                mamba env create -f scRNAseq_env.yml # mamba install
+            else
+                conda env create -f scRNAseq_env.yml # create env
+            fi
+        fi
+        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
+        echo "Detected conda env: "$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
+    fi
+}
+
+check_docker(){
+    echo ""
+}
+
+run(){
+    ## run the pipeline
+    ## set default value of some parameters
+    local nextflowOpt=""
+    local run_cpus=8
+    local run_mem="16.GB"
+    local run_env="conda" # conda as default
+    local executor="local"
+    local noDepCheck=false
+
+    ## read parameters
+    while [[ ! -z $1 ]]
+    do
+        case $1 in
+            "" | "-h" | "-help" | "--help")
+                run_usage
+                exit 0
+                ;;
+            "--config")
+                local configFile=$2
+                shift 2
+                ;;
+            "--conda")
+                check_conda
+                local run_env="conda"
+                shift 1
+                ;;
+            "--docker")
+                echo "docker env is under development, please use conda instead..."
+                exit 0
+                shift 1
+                ;;
+            "--executor")
+                local executor=$2
+                shift 2
+                ;;
+            "--cpus")
+                local run_cpus=$2
+                shift 2
+                ;;
+            "--mem")
+                local run_mem=$2
+                shift 2
+                ;;
+            "--noDepCheck")
+                local noDepCheck=true
+                shift 1
+                ;;
+            *)
+                nextflowOpt="$nextflowOpt $1"
+                shift 1
+                ;;
+        esac
+    done
+
+    ## check required arguments
+    ##if [[ -z ]]
+    ## check dependency
+    if [[ $noDepCheck == false ]]
+    then
+        check_java
+        check_nextflow
+    fi
+    ## make process config file
+    if [[ -z $configFile ]]
+    then
+        configFile=$(mktemp)
+        if [[ $run_env == "conda" ]]
+        then
+            check_conda
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  conda = "$conda_env_path"
+			}
+			EOF
+        elif [[ $run_env == "docker" ]]
+        then
+            ## check_docker
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  docker = "$docker_image"
+			}
+			EOF
+            echo ""
+        else
+            echo "run env only support conda and docker for now."
+            exit 1
+        fi
+    fi
+
+    echo "Using local config as : $configFile"
+    echo "nextflow command:"
+    echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
+    nextflow run scRNA-seq -c $configFile $nextflowOpt
+}
+
+if [[ -z $1 ]]
+then
+    subcommand=""
+else
+    subcommand=$1
+    shift 1;
+fi
+
+case $subcommand in
+    "" | "-h" | "--help" | "-help")
+        usage
+        ;;
+    "run")
+        run $@
+        ;;
+    "mkref")
+        mkref $@
+        ;;
+    *)
+        echo "Please provide valid subcommand: run or mkref"
+        exit 1
+esac
