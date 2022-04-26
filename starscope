@@ -5,6 +5,18 @@
 
 set -eo pipefail
 
+## Generate starscope script path
+## The solution is from:
+## https://stackoverflow.com/questions/59895/how-can-i-get-the-source-directory-of-a-bash-script-from-within-the-script-itsel
+SOURCE=${BASH_SOURCE[0]}
+while [ -h "$SOURCE" ];
+do # resolve $SOURCE until the file is no longer a symlink
+    DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
+    SOURCE=$(readlink "$SOURCE")
+    [[ $SOURCE != /* ]] && SOURCE=$DIR/$SOURCE # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
+
 usage(){
     cat <<-EOF
 	starscope uses starsolo and Seurat package as the core modules to process
@@ -151,9 +163,9 @@ check_conda(){
             ## use mamba if installed
             if [[ -n $(which mamba) ]]
             then
-                mamba env create -f scRNAseq_env.yml # mamba install
+                mamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml # mamba install
             else
-                conda env create -f scRNAseq_env.yml # create env
+                conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
         fi
         conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
@@ -264,7 +276,7 @@ run(){
     echo "Using local config as : $configFile"
     echo "nextflow command:"
     echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
-    nextflow run scRNA-seq -c $configFile $nextflowOpt
+    nextflow run $DIR/scRNA-seq -c $configFile $nextflowOpt
 }
 
 if [[ -z $1 ]]
