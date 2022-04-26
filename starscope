@@ -187,6 +187,13 @@ run(){
     local executor="local"
     local noDepCheck=false
 
+    ## if no parameter provided to run command
+    ## print help message
+    if [[ -z $1 ]]
+    then
+        run_usage
+        exit 0
+    fi
     ## read parameters
     while [[ ! -z $1 ]]
     do
@@ -232,8 +239,6 @@ run(){
         esac
     done
 
-    ## check required arguments
-    ##if [[ -z ]]
     ## check dependency
     if [[ $noDepCheck == false ]]
     then
