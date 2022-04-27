@@ -107,7 +107,29 @@ run_usage(){
 
 mkref_usage(){
     cat <<-EOF
-	help message for starscope mkref
+	Basic Usage:
+	===========
+	starscope <mkref> --conda \\
+	                  --genomeFasta /path/to/genome/fasta \\
+	                  --genomeGTF /path/to/genome/gtf \\
+	                  --refoutDir reference_out_dir \\
+	                  -bg
+	
+	options:
+	  --conda           Use conda env to run (true)
+	  --genomeFasta     Path of reference FASTA file
+	  --genomeGTF       Path of reference GTF file
+	  --config          Provide a custom nextflow config file to
+	                    define all parameters
+	  --executor        Define executor of nextflow (local), see:
+	                    https://www.nextflow.io/docs/latest/executor.html
+	  --cpus            CPUs to use for all processes (8)
+	  --mem             Memory to use for all processes, please note
+	                    the special format (16.GB)
+	  --noDepCheck      Do not check Java and nextflow before
+	                    running (false)
+	  -bg               Running the pipeline in background (false)
+	
 	EOF
 
     exit 0
@@ -282,6 +304,115 @@ run(){
     echo "nextflow command:"
     echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
     nextflow run $DIR/scRNA-seq -c $configFile $nextflowOpt
+}
+
+
+mkref(){
+    ## run the pipeline
+    ## set default value of some parameters
+    local nextflowOpt=""
+    local run_cpus=8
+    local run_mem="16.GB"
+    local run_env="conda" # conda as default
+    local executor="local"
+    local noDepCheck=false
+
+    ## if no parameter provided to run command
+    ## print help message
+    if [[ -z $1 ]]
+    then
+        mkref_usage
+        exit 0
+    fi
+    ## read parameters
+    while [[ ! -z $1 ]]
+    do
+        case $1 in
+            "" | "-h" | "-help" | "--help")
+                mkref_usage
+                exit 0
+                ;;
+            "--config")
+                local configFile=$2
+                shift 2
+                ;;
+            "--conda")
+                check_conda
+                local run_env="conda"
+                shift 1
+                ;;
+            "--docker")
+                echo "docker env is under development, please use conda instead..."
+                exit 0
+                shift 1
+                ;;
+            "--executor")
+                local executor=$2
+                shift 2
+                ;;
+            "--cpus")
+                local run_cpus=$2
+                shift 2
+                ;;
+            "--mem")
+                local run_mem=$2
+                shift 2
+                ;;
+            "--noDepCheck")
+                local noDepCheck=true
+                shift 1
+                ;;
+            *)
+                nextflowOpt="$nextflowOpt $1"
+                shift 1
+                ;;
+        esac
+    done
+
+    ## check dependency
+    if [[ $noDepCheck == false ]]
+    then
+        check_java
+        check_nextflow
+    fi
+    ## make process config file
+    if [[ -z $configFile ]]
+    then
+        configFile=$(mktemp)
+        if [[ $run_env == "conda" ]]
+        then
+            check_conda
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  conda = "$conda_env_path"
+			}
+			EOF
+        elif [[ $run_env == "docker" ]]
+        then
+            ## check_docker
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  docker = "$docker_image"
+			}
+			EOF
+            echo ""
+        else
+            echo "run env only support conda and docker for now."
+            exit 1
+        fi
+    fi
+
+    echo "Using local config as : $configFile"
+    echo "nextflow command:"
+    echo "nextflow run scRNA-seq -c $configFile -entry mkref $nextflowOpt"
+    nextflow run $DIR/scRNA-seq -c $configFile -entry mkref $nextflowOpt
+
 }
 
 if [[ -z $1 ]]
