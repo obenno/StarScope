@@ -46,16 +46,18 @@ sample,fastq_1,fastq_2
 sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz
 
 Making Reference:
-starscope <mkref> xxx [output_report.html]
+starscope <mkref> --conda \
+                  --genomeFasta /path/to/genome/fasta \
+                  --genomeGTF /path/to/genome/gtf \
+                  --refoutDir reference_out_dir \
+                  -bg
 
 starscope has two valid subcommands:
-    run:
-        run the scRNAseq analysis pipeline with nextflow
-    mkref:
-        prepare STAR reference
+    run:      run the scRNAseq analysis pipeline with nextflow
+    mkref:    prepare STAR reference
 
-Please use -h option following each subcommand to get detail of the options:
-    e.g. starscope run -h
+Please use -h option following each subcommand to get detail
+of the options: e.g. starscope run -h
 ```
 
 ### `run` command
@@ -105,10 +107,43 @@ options:
 
 ```
 
+### `mkref` command
+
+```
+Basic Usage:
+===========
+starscope <mkref> --conda \
+                  --genomeFasta /path/to/genome/fasta \
+                  --genomeGTF /path/to/genome/gtf \
+                  --refoutDir reference_out_dir \
+                  -bg
+
+options:
+  --conda           Use conda env to run (true)
+  --genomeFasta     Path of reference FASTA file
+  --genomeGTF       Path of reference GTF file
+  --config          Provide a custom nextflow config file to
+                    define all parameters
+  --executor        Define executor of nextflow (local), see:
+                    https://www.nextflow.io/docs/latest/executor.html
+  --cpus            CPUs to use for all processes (8)
+  --mem             Memory to use for all processes, please note
+                    the special format (16.GB)
+  --noDepCheck      Do not check Java and nextflow before
+                    running (false)
+  -bg               Running the pipeline in background (false)
+
+```
+
 ## Release Note
+
+### StarScope v0.0.2
+
+- Implemented `mkref` command
+
 
 ### StarScope v0.0.1
 
-- Implemented run command
+- Implemented `run` command
 
 - Added running env checking procedure
