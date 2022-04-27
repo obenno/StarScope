@@ -41,16 +41,18 @@ usage(){
 	sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz
 	
 	Making Reference:
-	starscope <mkref> xxx [output_report.html]
+	starscope <mkref> --conda \\
+	                  --genomeFasta /path/to/genome/fasta \\
+	                  --genomeGTF /path/to/genome/gtf \\
+	                  --refoutDir reference_out_dir \\
+	                  -bg
 	
 	starscope has two valid subcommands:
-	    run:
-	        run the scRNAseq analysis pipeline with nextflow
-	    mkref:
-	        prepare STAR reference
+	    run:      run the scRNAseq analysis pipeline with nextflow
+	    mkref:    prepare STAR reference
 	
-	Please use -h option following each subcommand to get detail of the options:
-	    e.g. starscope run -h
+	Please use -h option following each subcommand to get detail
+	of the options: e.g. starscope run -h
 	EOF
 
     exit 0;
