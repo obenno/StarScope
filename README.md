@@ -1,6 +1,7 @@
 # StarScope
 
-`StarScope` provide a convenient way to run the scRNA-seq workflow
+`StarScope` provide a convenient way to run the 
+[scRNA-seq workflow](https://github.com/obenno/scRNA-seq)
 which uses **starsolo** (https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md) 
 and **Seurat** package (https://satijalab.org/seurat/) as the core modules to process scRNA-seq
 data and generate a concise HTML report. 
