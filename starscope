@@ -231,7 +231,7 @@ run(){
                 shift 2
                 ;;
             "--conda")
-                check_conda
+                ##check_conda
                 local run_env="conda"
                 shift 1
                 ;;
@@ -339,7 +339,7 @@ mkref(){
                 shift 2
                 ;;
             "--conda")
-                check_conda
+                ##check_conda
                 local run_env="conda"
                 shift 1
                 ;;
