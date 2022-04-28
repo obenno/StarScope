@@ -9,12 +9,33 @@ The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
 
 ## Installation
 
+`StarScope` will automatically check dependencies, install nextflow and
+create conda environment if conda is selected as running environment. 
+But user will have to install [`Java`](https://openjdk.java.net/install/) and 
+[`miniconda`](https://docs.conda.io/en/latest/miniconda.html) 
+manually. It is suggested to install
+[`mamba`](https://mamba.readthedocs.io/en/latest/installation.html) 
+via `conda install -n base -c conda-forge mamba` to speedup environment
+creating process.
+
+### Dependencies
+
+- Java 8 or higher
+- conda/miniconda
+- or docker (not ready)
+
+### Get Code
+
 ```
-git clone https://github.com/obenno/StarScope.git
+git clone --recurse-submodules https://github.com/obenno/StarScope.git
 ```
 
+or download compressed file from project release page.
+
+### Add `starscope` to PATH
+
 User could add `starscope` to PATH via creating
-symbolic link (assuming ~/.local/bin is in the PATH): 
+symbolic link (assuming `~/.local/bin` is in the PATH): 
 
 ```
 ln -s /git/repo/starscope ~/.local/bin/
