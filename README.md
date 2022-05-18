@@ -58,9 +58,9 @@ starscope <run> --conda \
                 --whitelist /path/to/whitelist \
                 --trimLength 28 \
                 --soloCBstart 1 \
-                --soloCBlen 16 \
-                --soloUMIstart 17 \
-                --soloUMIlen = 12 \
+                --soloCBlen 29 \
+                --soloUMIstart 30 \
+                --soloUMIlen = 10 \
                 -bg
 
 Example input list (csv):
@@ -94,9 +94,9 @@ starscope <run> --conda \
                 --whitelist /path/to/whitelist \
                 --trimLength 28 \
                 --soloCBstart 1 \
-                --soloCBlen 16 \
-                --soloUMIstart 17 \
-                --soloUMIlen = 12 \
+                --soloCBlen 29 \
+                --soloUMIstart 30 \
+                --soloUMIlen = 10 \
                 -bg
 
 options:
@@ -113,9 +113,9 @@ options:
   --trimLength      Min read length retained after cutadapt
                     trimming (28)
   --soloCBstart     Cell barcode start base in read1 (1)
-  --soloCBlen       Cell barcode length (16)
-  --soloUMIstart    UMI start base in read1 (17)
-  --soloUMIlen      UMI length (12)
+  --soloCBlen       Cell barcode length (29)
+  --soloUMIstart    UMI start base in read1 (30)
+  --soloUMIlen      UMI length (10)
   --config          Provide a custom nextflow config file to
                     define all parameters
   --executor        Define executor of nextflow (local), see:
@@ -170,6 +170,12 @@ options:
 
 
 ## Release Note
+
+### StarScope v0.0.3
+
+- Set thunderbio data running parameters as defaults instead of 10x parameters
+
+- Added whitelists for thunderbio V2, 10x V2 and V3
 
 ### StarScope v0.0.2
 
