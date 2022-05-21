@@ -1,3 +1,4 @@
 [submodule "scRNA-seq"]
 	path = scRNA-seq
 	url = git@github.com:obenno/scRNA-seq.git
+	branch = main
