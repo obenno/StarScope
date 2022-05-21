@@ -166,8 +166,11 @@ check_nextflow(){
     then
         echo "No nextflow detected, installing..."
         curl -s https://get.nextflow.io | bash
+        nextflow="./nextflow"
+        echo "Please move nextflow executable file to your PATH directory."
     else
         echo "Nextflow installed: "$(which nextflow)
+        nextflow="nextflow"
     fi
 }
 
@@ -306,7 +309,7 @@ run(){
     echo "Using local config as : $configFile"
     echo "nextflow command:"
     echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
-    nextflow run $DIR/scRNA-seq -c $configFile $nextflowOpt
+    $nextflow run $DIR/scRNA-seq -c $configFile $nextflowOpt
 }
 
 
@@ -414,7 +417,7 @@ mkref(){
     echo "Using local config as : $configFile"
     echo "nextflow command:"
     echo "nextflow run scRNA-seq -c $configFile -entry mkref $nextflowOpt"
-    nextflow run $DIR/scRNA-seq -c $configFile -entry mkref $nextflowOpt
+    $nextflow run $DIR/scRNA-seq -c $configFile -entry mkref $nextflowOpt
 
 }
 
