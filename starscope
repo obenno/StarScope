@@ -121,7 +121,11 @@ mkref_usage(){
 	  --conda           Use conda env to run (true)
 	  --genomeFasta     Path of reference FASTA file
 	  --genomeGTF       Path of reference GTF file
-	  --refoutDir       output reference dir name
+	  --outdir          publish dir path (results)
+	  --refoutDir       output reference dir name (STAR_reference),
+	                    note the final reference will locate in
+	                    outdir/refoutDir, which by default is
+	                    results/STAR_reference
 	  --config          Provide a custom nextflow config file to
 	                    define all parameters
 	  --executor        Define executor of nextflow (local), see:
