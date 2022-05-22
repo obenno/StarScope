@@ -202,7 +202,22 @@ check_conda(){
 }
 
 check_docker(){
-    echo ""
+    echo "Checking docker and docker image..."
+    if [[ -z $(which docker) ]]
+    then
+        echo "Please install docker first: https://get.docker.com/"
+        exit 1
+    elif [[ $(docker info | grep -c "Docker Root Dir") == 1 ]]
+    then
+        ## ensure image is pulled and up-to-date
+        echo "Pulling image..."
+        docker_image="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env"
+        echo "Image used: $docker_image"
+        docker pull $docker_image
+    else
+        echo "It seems that docker daemon is not running?..."
+        exit 1
+    fi
 }
 
 run(){
@@ -235,13 +250,11 @@ run(){
                 shift 2
                 ;;
             "--conda")
-                ##check_conda
                 local run_env="conda"
                 shift 1
                 ;;
             "--docker")
-                echo "docker env is under development, please use conda instead..."
-                exit 0
+                local run_env="docker"
                 shift 1
                 ;;
             "--executor")
@@ -290,7 +303,7 @@ run(){
 			EOF
         elif [[ $run_env == "docker" ]]
         then
-            ## check_docker
+            check_docker
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
@@ -348,8 +361,7 @@ mkref(){
                 shift 1
                 ;;
             "--docker")
-                echo "docker env is under development, please use conda instead..."
-                exit 0
+                local run_env="docker"
                 shift 1
                 ;;
             "--executor")
@@ -398,7 +410,7 @@ mkref(){
 			EOF
         elif [[ $run_env == "docker" ]]
         then
-            ## check_docker
+            check_docker
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
