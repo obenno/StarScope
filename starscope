@@ -201,7 +201,7 @@ check_conda(){
             fi
         fi
         conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
-        echo "Detected conda env: "$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
+        echo "Detected conda env: "$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $NF}')
     fi
 }
 
