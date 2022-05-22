@@ -200,7 +200,7 @@ check_conda(){
                 conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
         fi
-        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $2}')
+        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $NF}')
         echo "Detected conda env: "$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $NF}')
     fi
 }
