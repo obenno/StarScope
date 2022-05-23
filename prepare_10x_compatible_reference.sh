@@ -464,7 +464,7 @@ usage(){
 	prepare_10x_compatible_reference.sh <human|mouse|hm|all> [starscope_options]
 	
 	prepare_10x_compatible_reference.sh human    generate human GRh38 reference
-	prepare_10x_compatible_reference.sh mm       generate mouse mm10 reference
+	prepare_10x_compatible_reference.sh mouse    generate mouse mm10 reference
 	prepare_10x_compatible_reference.sh hm       combine GRh38 and mm10 to
 	                                             generate reference for hybrid
 	                                             sample analysis
