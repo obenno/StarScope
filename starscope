@@ -313,8 +313,11 @@ run(){
 			  executor = "$executor"
 			  cpus   = $run_cpus
 			  memory = $run_mem
-			  docker = "$docker_image"
+			  container = "$docker_image"
 			}
+			docker.enabled = true
+			docker.userEmulation = true
+			docker.runOptions = '-u $(id -u):$(id -g) --init'
 			EOF
             echo ""
         else
@@ -420,8 +423,11 @@ mkref(){
 			  executor = "$executor"
 			  cpus   = $run_cpus
 			  memory = $run_mem
-			  docker = "$docker_image"
+			  container = "$docker_image"
 			}
+			docker.enabled = true
+			docker.userEmulation = true
+			docker.runOptions = '-u $(id -u):$(id -g) --init'
 			EOF
             echo ""
         else
