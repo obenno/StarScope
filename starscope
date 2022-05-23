@@ -451,6 +451,9 @@ else
     shift 1;
 fi
 
+## Added version number here
+starscope_version="v0.0.3"
+
 case $subcommand in
     "" | "-h" | "--help" | "-help")
         usage
@@ -461,7 +464,11 @@ case $subcommand in
     "mkref")
         mkref $@
         ;;
+    "-v" | "--version" | "-version")
+        echo "starscope $starscope_version"
+        ;;
     *)
         echo "Please provide valid subcommand: run or mkref"
         exit 1
+        ;;
 esac
