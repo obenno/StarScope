@@ -76,7 +76,7 @@ run_usage(){
 	
 	options:
 	  --conda           Use conda env to run (true)
-	  --docker          Use docker container to run (not implemented)
+	  --docker          Use docker container to run
 	  --input           Input sample list, csv format, required
 	                    columns include "sample" for sampleName,
 	                    "fastq_1" for read1, "fastq_2" for read2,
