@@ -9,6 +9,12 @@ The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
 
 ## Installation
 
+### Dependencies
+
+- Java 8 or higher
+- conda/miniconda
+- or docker
+
 `StarScope` will automatically check dependencies, install nextflow and
 create conda environment if conda is selected as running environment. 
 But user will have to install [`Java`](https://openjdk.java.net/install/) and 
@@ -16,13 +22,27 @@ But user will have to install [`Java`](https://openjdk.java.net/install/) and
 manually. It is suggested to install
 [`mamba`](https://mamba.readthedocs.io/en/latest/installation.html) 
 via `conda install -n base -c conda-forge mamba` to speedup environment
-creating process.
+creating process. By default, the nextflow binary will be downloaded in the working directory, user could move it to \$PATH.
 
-### Dependencies
+Alternatively, user could use docker container as running environment. But `docker` has to be installed on the system:
 
-- Java 8 or higher
-- conda/miniconda
-- or docker (not ready)
+```
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+
+To use docker command without `sudo`, add account to `docker` group:
+
+```
+sudo usermod -aG docker $(whoami)
+```
+Then login out and login again for the changes to take effect.
+
+`starscope` will pull the image automatically when invoke commands. If the network is not stable, user could pull the image manually with:
+
+```
+docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env
+```
 
 ### Get Code
 
@@ -30,18 +50,80 @@ creating process.
 git clone --recurse-submodules https://github.com/obenno/StarScope.git
 ```
 
-or download compressed file from project release page.
-
 ### Add `starscope` to PATH
 
 User could add `starscope` to PATH via creating
-symbolic link (assuming `~/.local/bin` is in the PATH): 
+symbolic link (assuming `~/.local/bin` is in the $PATH): 
 
 ```
 ln -s /git/repo/starscope ~/.local/bin/
 ```
 
+## Prepare STAR reference
+
+We included a bash script for user to generate 10x compatible reference. 10x has removed some genes from the standard genecode annotation. Please refer to their [website](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#header) for detail process procedures.
+
+To generate human reference with conda, use command below:
+
+```
+prepare_10x_compatible_reference.sh human --cpus 8 --mem 32.GB -bg
+```
+
+user could use `prepare_10x_compatible_reference.sh -h` to get the full help:
+
+```
+prepare_10x_compatible_reference.sh will help you to generate
+10x cellranger compatible STAR reference set. The detail preparing
+procedures could be referred from 10x's documentation website:
+https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#header
+
+Usage:
+prepare_10x_compatible_reference.sh <human|mouse|hm|all> [starscope_options]
+
+prepare_10x_compatible_reference.sh human    generate human GRh38 reference
+prepare_10x_compatible_reference.sh mouse    generate mouse mm10 reference
+prepare_10x_compatible_reference.sh hm       combine GRh38 and mm10 to
+                                             generate reference for hybrid
+                                             sample analysis
+prepare_10x_compatible_reference.sh all      generate all three reference
+                                             datasets mentioned above
+
+starscope_options:
+--executor        Define executor of nextflow (local), see:
+                  https://www.nextflow.io/docs/latest/executor.html
+--cpus            CPUs to use for all processes (8)
+--mem             Memory to use for all processes, please note
+                  the special format (16.GB)
+--noDepCheck      Do not check Java and nextflow before
+                  running (false)
+-bg               Running the pipeline in background (false)
+
+example:
+prepare_10x_compatible_reference.sh human --cpus 8 --mem 32.GB -bg
+```
+
+User could use their own genome fasta and GTF file to create STAR reference by invoking `starscope mkref` command.
+
 ## Usage
+
+Please note the whitelist files have to be decompressed before passing to the program.
+
+### Example command
+
+Run thunderbio data with conda env:
+```
+starscope <run> --conda \
+                --input sampleList.csv \
+                --genomeDir /path/to/STAR/reference \
+                --genomeGTF /path/to/genomeGTF \
+                --whitelist /path/to/whitelist \
+                --trimLength 28 \
+                --soloCBstart 1 \
+                --soloCBlen 29 \
+                --soloUMIstart 30 \
+                --soloUMIlen = 10 \
+                -bg
+```
 
 ### Main programme
 
@@ -101,7 +183,7 @@ starscope <run> --conda \
 
 options:
   --conda           Use conda env to run (true)
-  --docker          Use docker container to run (not implemented)
+  --docker          Use docker container to run
   --input           Input sample list, csv format, required
                     columns include "sample" for sampleName,
                     "fastq_1" for read1, "fastq_2" for read2,
@@ -176,6 +258,14 @@ options:
 - Set thunderbio data running parameters as defaults instead of 10x parameters
 
 - Added whitelists for thunderbio V2, 10x V2 and V3
+
+- Fixed nextflow default path issue
+
+- Fixed conda env name issue
+
+- Implemented docker container running environment
+
+- Added a new script for user to generate 10x compatible STAR reference
 
 ### StarScope v0.0.2
 
