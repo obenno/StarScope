@@ -253,7 +253,11 @@ options:
 
 ## Release Note
 
-### StarScope v0.0.3
+### StarScope v0.0.5
+
+- Fixed issue that no report generated if there are too few cells left after filtering by nFeature >= 200
+
+### StarScope v0.0.3, v0.0.4
 
 - Set thunderbio data running parameters as defaults instead of 10x parameters
 
