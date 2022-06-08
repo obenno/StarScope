@@ -48,8 +48,9 @@ usage(){
 	                  -bg
 	
 	starscope has two valid subcommands:
-	    run:      run the scRNAseq analysis pipeline with nextflow
-	    mkref:    prepare STAR reference
+	    run:            run the scRNAseq analysis pipeline with nextflow
+	    mkref:          prepare STAR reference
+	    check_version:  check software versions
 	
 	Please use -h option following each subcommand to get detail
 	of the options: e.g. starscope run -h
@@ -97,7 +98,7 @@ run_usage(){
 	                    https://www.nextflow.io/docs/latest/executor.html
 	  --cpus            CPUs to use for all processes (8)
 	  --mem             Memory to use for all processes, please note
-	                    the special format (16.GB)
+	                    the special format (32.GB)
 	  --noDepCheck      Do not check Java and nextflow before
 	                    running (false)
 	  -bg               Running the pipeline in background (false)
@@ -132,7 +133,7 @@ mkref_usage(){
 	                    https://www.nextflow.io/docs/latest/executor.html
 	  --cpus            CPUs to use for all processes (8)
 	  --mem             Memory to use for all processes, please note
-	                    the special format (16.GB)
+	                    the special format (40.GB)
 	  --noDepCheck      Do not check Java and nextflow before
 	                    running (false)
 	  -bg               Running the pipeline in background (false)
@@ -140,6 +141,18 @@ mkref_usage(){
 	EOF
 
     exit 0
+}
+
+check_version_usage(){
+    cat <<-EOF
+	Basic Usage:
+	===========
+	starscope <check_version> [--conda|--docker]
+	
+	options:
+	  --conda     print program version of conda env
+	  --docker    print program version in docker container
+	EOF
 }
 
 check_java(){
@@ -171,16 +184,21 @@ check_nextflow(){
         echo "No nextflow detected, installing..."
         curl -s https://get.nextflow.io | bash
         nextflow="./nextflow"
+        nextflow_version=$(./nextflow -v)
+        echo "Nextflow downloaded in the current directory: $nextflow_version"
         echo "Please move nextflow executable file to your PATH directory."
     else
         echo "Nextflow installed: "$(which nextflow)
         nextflow="nextflow"
+        nextflow_version=$(nextflow -v)
+        echo "$nextflow_version"
     fi
 }
 
 check_conda(){
     ## Check if conda is installed
     ## Check if env is ready
+    conda_env_name=$(head -1 $DIR/scRNA-seq/scRNAseq_env.yml| awk '{print $2}')
     echo "Checking conda and conda env..."
     if [[ -z $(which conda) ]]
     then
@@ -188,7 +206,7 @@ check_conda(){
         exit 1
     else
         echo "Conda installed: "$(which conda)
-        conda_env=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $1}')
+        conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
         if [[ -z $conda_env ]]
         then
             echo "Preparing conda env..."
@@ -200,8 +218,8 @@ check_conda(){
                 conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
         fi
-        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $NF}')
-        echo "Detected conda env: "$(conda env list | awk '$1!~/^#/ && $1=="starscope_env"{print $NF}')
+        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $NF}')
+        echo "Detected conda env: "$conda_env_path
     fi
 }
 
@@ -224,12 +242,81 @@ check_docker(){
     fi
 }
 
+check_version(){
+    ## read parameters
+    case $1 in
+        "" | "-h" | "-help" | "--help")
+            check_version_usage
+            exit 0
+            ;;
+        "--conda")
+            local run_env="conda"
+            shift 1
+            ;;
+        "--docker")
+            local run_env="docker"
+            shift 1
+            ;;
+        *)
+            echo "Only support conda and docker running env now..."
+            exit 1
+            ;;
+    esac
+    check_java
+    check_nextflow
+    R_cmd=(Rscript -e 'options(warn=-1);suppressMessages({library(tidyverse);library(scales);library(jsonlite);library(Seurat);library(future)});sessionInfo()')
+    if [[ $run_env == "conda" ]]
+    then
+        check_conda
+        cutadapt_version=$(conda run -n $conda_env_name cutadapt --version | sed '/^$/d')
+        fastqc_version=$(conda run -n $conda_env_name fastqc --version | awk '{print $2}')
+        star_version=$(conda run -n $conda_env_name STAR --version)
+        samtools_version=$(conda run -n $conda_env_name samtools --version | head -1 |awk '{print $2}')
+        bedtools_version=$(conda run -n $conda_env_name bedtools --version | awk '{print $2}')
+        qualimap_version=$(conda run -n $conda_env_name qualimap -h | awk '$1=="QualiMap"{print $2}')
+        printf "%80s\n" | tr " " "="
+        cat <<-EOF
+		starscope: $starscope_version
+		cutadapt: $cutadapt_version
+		fastqc: $fastqc_version
+		samtools: $samtools_version
+		bedtools: $bedtools_versio
+		STAR: $star_version
+		qualimap: $qualimap_version
+		EOF
+        printf "%80s\n" | tr " " "="
+        conda run -n $conda_env_name ${R_cmd[@]}
+
+    elif [[ $run_env == "docker" ]]
+    then
+        check_docker
+        cutadapt_version=$(docker run --rm $docker_image cutadapt --version)
+        fastqc_version=$(docker run --rm $docker_image fastqc --version | awk '{print $2}')
+        star_version=$(docker run --rm $docker_image STAR --version)
+        samtools_version=$(docker run --rm $docker_image samtools --version 2> /dev/null | head -1 |awk '{print $2}')
+        bedtools_version=$(docker run --rm $docker_image bedtools --version | awk '{print $2}')
+        qualimap_version=$(docker run --rm $docker_image qualimap -h | awk '$1=="QualiMap"{print $2}')
+        printf "%80s\n" | tr " " "="
+        cat <<-EOF
+		starscope: $starscope_version
+		cutadapt: $cutadapt_version
+		fastqc: $fastqc_version
+		samtools: $samtools_version
+		bedtools: $bedtools_versio
+		STAR: $star_version
+		qualimap: $qualimap_version
+		EOF
+        printf "%80s\n" | tr " " "="
+        docker run --rm $docker_image ${R_cmd[@]}
+    fi
+}
+
 run(){
     ## run the pipeline
     ## set default value of some parameters
     local nextflowOpt=""
     local run_cpus=8
-    local run_mem="16.GB"
+    local run_mem="32.GB"
     local run_env="conda" # conda as default
     local executor="local"
     local noDepCheck=false
@@ -338,7 +425,7 @@ mkref(){
     ## set default value of some parameters
     local nextflowOpt=""
     local run_cpus=8
-    local run_mem="16.GB"
+    local run_mem="40.GB"
     local run_env="conda" # conda as default
     local executor="local"
     local noDepCheck=false
@@ -463,6 +550,9 @@ case $subcommand in
         ;;
     "mkref")
         mkref $@
+        ;;
+    "check_version")
+        check_version $@
         ;;
     "-v" | "--version" | "-version")
         echo "starscope $starscope_version"
