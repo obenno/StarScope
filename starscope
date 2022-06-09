@@ -264,7 +264,7 @@ check_version(){
     esac
     check_java
     check_nextflow
-    R_cmd=(Rscript -e 'options(warn=-1);suppressMessages({library(tidyverse);library(scales);library(jsonlite);library(Seurat);library(future)});library(DT);library(plotly);library(kableExtra);library(flexdashboard);sessionInfo()')
+    R_cmd=(Rscript -e 'options(warn=-1);suppressMessages({library(tidyverse);library(scales);library(jsonlite);library(Seurat);library(future);library(DT);library(plotly);library(kableExtra);library(flexdashboard);});sessionInfo()')
     if [[ $run_env == "conda" ]]
     then
         check_conda
