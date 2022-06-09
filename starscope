@@ -264,6 +264,7 @@ check_version(){
     esac
     check_java
     check_nextflow
+    ## https://superuser.com/questions/360966/how-do-i-use-a-bash-variable-string-containing-quotes-in-a-command
     R_cmd=(Rscript -e 'options(warn=-1);suppressMessages({library(tidyverse);library(scales);library(jsonlite);library(Seurat);library(future);library(DT);library(plotly);library(kableExtra);library(flexdashboard);});sessionInfo()')
     if [[ $run_env == "conda" ]]
     then
@@ -285,7 +286,12 @@ check_version(){
 		qualimap: $qualimap_version
 		EOF
         printf "%80s\n" | tr " " "="
-        conda run -n $conda_env_name ${R_cmd[@]}
+        echo "R sessionInfo:"
+        echo ""
+        conda run -n $conda_env_name "${R_cmd[@]}"
+        printf "%80s\n" | tr " " "="
+        echo "Conda Info:"
+        conda info
 
     elif [[ $run_env == "docker" ]]
     then
@@ -307,7 +313,12 @@ check_version(){
 		qualimap: $qualimap_version
 		EOF
         printf "%80s\n" | tr " " "="
-        docker run --rm $docker_image ${R_cmd[@]}
+        echo "R sessionInfo:"
+        echo ""
+        docker run --rm $docker_image "${R_cmd[@]}"
+        printf "%80s\n" | tr " " "="
+        echo "Docker Info:"
+        docker info
     fi
 }
 
