@@ -281,7 +281,7 @@ check_version(){
 		cutadapt: $cutadapt_version
 		fastqc: $fastqc_version
 		samtools: $samtools_version
-		bedtools: $bedtools_versio
+		bedtools: $bedtools_version
 		STAR: $star_version
 		qualimap: $qualimap_version
 		EOF
@@ -308,7 +308,7 @@ check_version(){
 		cutadapt: $cutadapt_version
 		fastqc: $fastqc_version
 		samtools: $samtools_version
-		bedtools: $bedtools_versio
+		bedtools: $bedtools_version
 		STAR: $star_version
 		qualimap: $qualimap_version
 		EOF
