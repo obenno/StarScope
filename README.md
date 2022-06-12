@@ -239,6 +239,18 @@ options:
 
 ```
 
+### `check_version` command
+
+```
+Basic Usage:
+===========
+starscope <check_version> [--conda|--docker]
+
+options:
+  --conda     print program version of conda env
+  --docker    print program version in docker container
+```
+
 ## Output
 
 - **results**: main output directory
@@ -252,6 +264,18 @@ options:
 
 
 ## Release Note
+
+### StarScope v0.0.6
+
+- **Now the BAM output will not by published**
+
+- **Added support for counting intron reads**
+
+- Added `check_version` command, to print all software versions including docker or conda engine information
+
+- Fixed STAR to 2.7.9a and samtools to 1.15
+
+- Fixed issue that no report generated if too few cells detected
 
 ### StarScope v0.0.5
 
