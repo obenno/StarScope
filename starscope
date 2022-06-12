@@ -92,6 +92,8 @@ run_usage(){
 	  --soloCBlen       Cell barcode length (29)
 	  --soloUMIstart    UMI start base in read1 (30)
 	  --soloUMIlen      UMI length (10)
+	  --soloFeatures    Define whether only count UMI in exon region: Gene
+	                    or from both exon and intron region: GeneFull (Gene)
 	  --config          Provide a custom nextflow config file to
 	                    define all parameters
 	  --executor        Define executor of nextflow (local), see:

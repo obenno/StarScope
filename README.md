@@ -198,17 +198,18 @@ options:
   --soloCBlen       Cell barcode length (29)
   --soloUMIstart    UMI start base in read1 (30)
   --soloUMIlen      UMI length (10)
+  --soloFeatures    Define whether only count UMI in exon region: Gene
+                    or from both exon and intron region: GeneFull (Gene)
   --config          Provide a custom nextflow config file to
                     define all parameters
   --executor        Define executor of nextflow (local), see:
                     https://www.nextflow.io/docs/latest/executor.html
   --cpus            CPUs to use for all processes (8)
   --mem             Memory to use for all processes, please note
-                    the special format (16.GB)
+                    the special format (32.GB)
   --noDepCheck      Do not check Java and nextflow before
                     running (false)
   -bg               Running the pipeline in background (false)
-
 ```
 
 ### `mkref` command
