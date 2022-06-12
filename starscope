@@ -550,7 +550,7 @@ else
 fi
 
 ## Added version number here
-starscope_version="v0.0.5"
+starscope_version="v0.0.6"
 
 case $subcommand in
     "" | "-h" | "--help" | "-help")
