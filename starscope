@@ -94,6 +94,8 @@ run_usage(){
 	  --soloUMIlen      UMI length (10)
 	  --soloFeatures    Define whether only count UMI in exon region: Gene
 	                    or from both exon and intron region: GeneFull (Gene)
+	  --soloStrand      Library strandness, Forward for thunderbio
+	                    3' RNA-seq, Reverse for 5' RNA-seq (Forward)
 	  --config          Provide a custom nextflow config file to
 	                    define all parameters
 	  --executor        Define executor of nextflow (local), see:
