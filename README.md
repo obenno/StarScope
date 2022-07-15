@@ -266,6 +266,15 @@ options:
 
 ## Release Note
 
+### StarScope v0.0.7
+
+- **Raw gene/barcode count table will be stored in a loom file and published for subsequent analysis**
+
+- **Mapping metrics will be written to a json file**
+
+- **Added support for 5' RNA-seq library**
+
+
 ### StarScope v0.0.6
 
 - **Now the BAM output will not by published**
