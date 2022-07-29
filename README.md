@@ -266,6 +266,16 @@ options:
 
 ## Release Note
 
+### StarScope v0.0.9
+
+- Fixed the issue that RunPCA uses up all cores and consumes too much memory ([Seurat #3991](https://github.com/satijalab/seurat/issues/3991))
+
+- Changed h5file format to H5Seurat
+
+- Disabled sass cache in rmd report
+
+- Changed future package strategy to multisession to avoid fork errors
+
 ### StarScope v0.0.7
 
 - **Raw gene/barcode count table will be stored in a loom file and published for subsequent analysis**
