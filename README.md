@@ -266,7 +266,7 @@ options:
 
 ## Release Note
 
-### StarScope v0.0.9
+### StarScope v0.0.8
 
 - Fixed the issue that RunPCA uses up all cores and consumes too much memory ([Seurat #3991](https://github.com/satijalab/seurat/issues/3991))
 
