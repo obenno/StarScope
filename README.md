@@ -125,7 +125,32 @@ starscope <run> --conda \
                 -bg
 ```
 
-### Main programme
+
+### Example sample list
+
+The workflow takes a csv format sample list as input, which is the `sampleList.csv` 
+in the command above. The sample list file only contains three 
+column: `sample`, `fastq_1`, `fastq_2`. User only needs to specify sample name, 
+path of read1 and read2. The program will assume that read1 file is the one 
+containing barcode and UMI information. Both absolute and relative path are supported. 
+If the library has multiple runs (i.e. multiple files of R1 and R2), user could indicate 
+the path of those files with identical sample name, and they will be `cat` into one 
+in the analysis.
+
+```
+sample,fastq_1,fastq_2
+10_pbmc_1k,read1.fq.gz,/absolute/path/to/read2.fq.gz
+```
+
+### Resources
+
+Please ensure that you have enough resource for `StarScope`:
+
+- Human GRh38 genome needs at least 32GB memory
+
+- Hybrid sample (human and mouse cells) may need 50-60GB memory
+
+### Main program
 
 ```
 starscope uses starsolo and Seurat package as the core modules to process
@@ -178,38 +203,43 @@ starscope <run> --conda \
                 --soloCBstart 1 \
                 --soloCBlen 29 \
                 --soloUMIstart 30 \
-                --soloUMIlen = 10 \
+                --soloUMIlen 10 \
                 -bg
 
 options:
-  --conda           Use conda env to run (true)
-  --docker          Use docker container to run
-  --input           Input sample list, csv format, required
-                    columns include "sample" for sampleName,
-                    "fastq_1" for read1, "fastq_2" for read2,
-                    and read1 is assumed to contain cell
-                    barcode.
-  --genomeDir       Path of STAR reference directory
-  --genomeGTF       Path of reference genome GTF file
-  --whitelist       Path of whitelist of barcodes
-  --trimLength      Min read length retained after cutadapt
-                    trimming (28)
-  --soloCBstart     Cell barcode start base in read1 (1)
-  --soloCBlen       Cell barcode length (29)
-  --soloUMIstart    UMI start base in read1 (30)
-  --soloUMIlen      UMI length (10)
-  --soloFeatures    Define whether only count UMI in exon region: Gene
-                    or from both exon and intron region: GeneFull (Gene)
-  --config          Provide a custom nextflow config file to
-                    define all parameters
-  --executor        Define executor of nextflow (local), see:
-                    https://www.nextflow.io/docs/latest/executor.html
-  --cpus            CPUs to use for all processes (8)
-  --mem             Memory to use for all processes, please note
-                    the special format (32.GB)
-  --noDepCheck      Do not check Java and nextflow before
-                    running (false)
-  -bg               Running the pipeline in background (false)
+  --conda               Use conda env to run (true)
+  --docker              Use docker container to run
+  --input               Input sample list, csv format, required
+                        columns include "sample" for sampleName,
+                        "fastq_1" for read1, "fastq_2" for read2,
+                        and read1 is assumed to contain cell
+                        barcode.
+  --genomeDir           Path of STAR reference directory
+  --genomeGTF           Path of reference genome GTF file
+  --whitelist           Path of whitelist of barcodes
+  --trimLength          Min read length retained after cutadapt
+                        trimming (28)
+  --soloCBstart         Cell barcode start base in read1 (1)
+  --soloCBlen           Cell barcode length (29)
+  --soloUMIstart        UMI start base in read1 (30)
+  --soloUMIlen          UMI length (10)
+  --soloFeatures        Define whether only count UMI in exon region:
+                        Gene or GeneFull which includes both exon and
+                        intron reads (GeneFull)
+  --soloMultiMappers    Counting method for reads mapping to multiple genes:
+                        Unique or EM (Unique)
+  --soloStrand          Library strandness, Forward for thunderbio
+                        3' RNA-seq, Reverse for 5' RNA-seq (Forward)
+  --config              Provide a custom nextflow config file to
+                        define all parameters
+  --executor            Define executor of nextflow (local), see:
+                        https://www.nextflow.io/docs/latest/executor.html
+  --cpus                CPUs to use for all processes (8)
+  --mem                 Memory to use for all processes, please note
+                        the special format (32.GB)
+  --noDepCheck          Do not check Java and nextflow before
+                        running (false)
+  -bg                   Running the pipeline in background (false)
 ```
 
 ### `mkref` command
@@ -252,6 +282,51 @@ options:
   --docker    print program version in docker container
 ```
 
+## Advance Usage
+
+User could use a local config file and submit jobs to job scheduler on HPC (e.g. `slurm`):
+
+```
+starscope run --input sampleList.csv --config local.config -bg
+```
+
+Example config for thunderbio 3' scRNA-seq data:
+
+```
+params {
+  genomeDir = "/path/to/STAR/reference/"
+  genomeGTF = "/path/to/reference/genes.gtf"
+  whitelist = "/path/to/whitelist"
+  trimLength = 50
+  soloCBstart = 1
+  soloCBlen = 29
+  soloUMIstart = 30
+  soloUMIlen = 10
+  soloMultiMappers = "Unique"
+  enable_conda = true
+}
+
+process {
+  executor = "slurm" // remove this line if use local executor
+  conda = "/path/to/miniconda3/envs/starscope_env
+  // adjust resources here
+  withLabel: process_high {
+    cpus = 8
+    memory = 32.GB
+  }
+  withLabel: process_medium {
+    cpus = 4
+    memory = 20.GB
+  }
+  withLabel: process_low {
+    cpus = 4
+    memory = 20.GB
+  }
+}
+```
+
+All parameters could be found in the `nextflow.config` file.
+
 ## Output
 
 - **results**: main output directory
@@ -263,8 +338,19 @@ options:
 
 - **work**: intermediate directory, could be safely removed after running complete
 
+## Issues
+
+Please note that `StarScope` only supports one sample (library) each sampleList for now.
 
 ## Release Note
+
+### StarScope v0.0.9
+
+- Updated STAR to v2.7.10a in both the docker image and the conda environment
+
+- Adapt the pipeline to generate report for starsolo `--soloMultiMappers` option, only "Unique" and "EM" are supported by now.
+
+- Changed the default parameter for `--soloFeatures` to "GeneFull", which includes both exon and **intron** reads
 
 ### StarScope v0.0.8
 
