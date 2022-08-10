@@ -107,6 +107,8 @@ User could use their own genome fasta and GTF file to create STAR reference by i
 ## Usage
 
 Please note the whitelist files have to be decompressed before passing to the program.
+To run thunderbio dataset, decompress with `gunzip whitelist/V2_barcode_seq_210407_concat.txt.gz`
+and use the `/path/to/V2_barcode_seq_210407_concat.txt` as the whitelist file in `starscope run` command.
 
 ### Example command
 
