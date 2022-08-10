@@ -41,7 +41,7 @@ Then login out and login again for the changes to take effect.
 `starscope` will pull the image automatically when invoke commands. If the network is not stable, user could pull the image manually with:
 
 ```
-docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env
+docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a
 ```
 
 ### Get Code
@@ -117,7 +117,7 @@ starscope <run> --conda \
                 --genomeDir /path/to/STAR/reference \
                 --genomeGTF /path/to/genomeGTF \
                 --whitelist /path/to/whitelist \
-                --trimLength 28 \
+                --trimLength 50 \
                 --soloCBstart 1 \
                 --soloCBlen 29 \
                 --soloUMIstart 30 \
@@ -139,7 +139,7 @@ in the analysis.
 
 ```
 sample,fastq_1,fastq_2
-10_pbmc_1k,read1.fq.gz,/absolute/path/to/read2.fq.gz
+sampleID,read1.fq.gz,/absolute/path/to/read2.fq.gz
 ```
 
 ### Resources
@@ -308,7 +308,7 @@ params {
 
 process {
   executor = "slurm" // remove this line if use local executor
-  conda = "/path/to/miniconda3/envs/starscope_env
+  conda = "/path/to/miniconda3/envs/starscope_env"
   // adjust resources here
   withLabel: process_high {
     cpus = 8
@@ -324,6 +324,45 @@ process {
   }
 }
 ```
+
+For docker container, please use the config below:
+
+```
+params {
+  genomeDir = "/path/to/STAR/reference/"
+  genomeGTF = "/path/to/reference/genes.gtf"
+  whitelist = "/path/to/whitelist"
+  trimLength = 50
+  soloCBstart = 1
+  soloCBlen = 29
+  soloUMIstart = 30
+  soloUMIlen = 10
+  soloMultiMappers = "Unique"
+}
+
+process {
+  executor = 'slurm'
+  //conda = "/home/xzx/Tools/miniconda3/envs/scRNA_thunderbio_env"
+  container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a"
+  withLabel: process_high {
+    cpus = 8
+    memory = 32.GB
+  }
+  withLabel: process_medium {
+    cpus = 4
+    memory = 20.GB
+  }
+  withLabel: process_low {
+    cpus = 4
+    memory = 20.GB
+  }
+}
+
+docker.enabled = true
+docker.userEmulation = true
+docker.runOptions = '-u $(id -u):$(id -g) --init'
+```
+
 
 All parameters could be found in the `nextflow.config` file.
 
@@ -343,6 +382,14 @@ All parameters could be found in the `nextflow.config` file.
 Please note that `StarScope` only supports one sample (library) each sampleList for now.
 
 ## Release Note
+
+### StarScope v1.0.0
+
+- Added pipeline running information to the reports
+
+- Fixed issue for saturation calculation script when there is no whitelist provided
+
+- Output a full list of DEGs
 
 ### StarScope v0.0.9
 
