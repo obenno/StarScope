@@ -123,7 +123,7 @@ starscope <run> --conda \
                 --soloCBstart 1 \
                 --soloCBlen 29 \
                 --soloUMIstart 30 \
-                --soloUMIlen = 10 \
+                --soloUMIlen 10 \
                 -bg
 ```
 
@@ -169,7 +169,7 @@ starscope <run> --conda \
                 --soloCBstart 1 \
                 --soloCBlen 29 \
                 --soloUMIstart 30 \
-                --soloUMIlen = 10 \
+                --soloUMIlen 10 \
                 -bg
 
 Example input list (csv):
