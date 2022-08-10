@@ -110,6 +110,8 @@ Please note the whitelist files have to be decompressed before passing to the pr
 To run thunderbio dataset, decompress with `gunzip whitelist/V2_barcode_seq_210407_concat.txt.gz`
 and use the `/path/to/V2_barcode_seq_210407_concat.txt` as the whitelist file in `starscope run` command.
 
+Please also note `--mem` option of `run` command needs a special format: e.g. `32.GB`. 
+
 ### Example command
 
 Run thunderbio data with conda env:
