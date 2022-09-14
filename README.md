@@ -11,9 +11,10 @@ The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
 
 ### Dependencies
 
-- Java 8 or higher
+- Java 11 or higher
 - conda/miniconda
 - or docker
+- nextflow
 
 `StarScope` will automatically check dependencies, install nextflow and
 create conda environment if conda is selected as running environment. 
@@ -23,8 +24,41 @@ manually. It is suggested to install
 [`mamba`](https://mamba.readthedocs.io/en/latest/installation.html) 
 via `conda install -n base -c conda-forge mamba` to speedup environment
 creating process. By default, the nextflow binary will be downloaded in the working directory, user could move it to \$PATH.
-
 Alternatively, user could use docker container as running environment. But `docker` has to be installed on the system:
+
+
+#### Java
+
+StarScope was tested with openjdk, please don't use oracle version.
+
+```
+## download link may vary depending on java version
+wget -c https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_linux-x64_bin.tar.gz
+tar xvzf openjdk-18.0.2.1_linux-x64_bin.tar.gz
+## set environment variable
+export JAVA_HOME="$(pwd)/jdk-18.0.2.1"
+export PATH="$PATH:$(pwd)/jdk-18.0.2.1/bin"
+## it is suggested to add export cmd above to your .bashrc
+```
+
+#### Conda
+
+Please use the corresponding installation script for your processor architecture.
+
+```
+wget -c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+`starscope` will create conda environment automatically when invoking `run` subcommand
+first time with the `--conda` option. User could create the environment
+manually before running.
+
+```
+conda env create -f starscope/scRNA-seq/scRNAseq_env.yml
+```
+
+#### Docker
 
 ```
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -44,13 +78,50 @@ Then login out and login again for the changes to take effect.
 docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a
 ```
 
-### Get Code
+#### Nextflow
+
+Download `nextflow` with:
+
+```
+curl -s https://get.nextflow.io | bash
+```
+
+Then mv the executable to `$PATH` (e.g. ~/.local/bin)
+
+```
+mv ./nextflow ~/.local/bin/
+```
+
+Confirm that nextflow runs properly
+
+```
+nextflow run hello
+```
+
+The output will be:
+
+```
+N E X T F L O W ~ version 22.04.0
+Launching `https://github.com/nextflow-io/hello` [distraught_ride] DSL2
+- revision: 4eab81bd42 [master]
+executor > local (4)
+[92/5fbfca] process > sayHello (4) [100%] 4 of 4 ✔
+Bonjour world!
+
+Hello world!
+
+Ciao world!
+
+Hola world!
+```
+
+#### Get Code
+
+Clone the repository from github:
 
 ```
 git clone --recurse-submodules https://github.com/obenno/StarScope.git
 ```
-
-### Add `starscope` to PATH
 
 User could add `starscope` to PATH via creating
 symbolic link (assuming `~/.local/bin` is in the $PATH): 
@@ -61,7 +132,10 @@ ln -s /git/repo/starscope ~/.local/bin/
 
 ## Prepare STAR reference
 
-We included a bash script for user to generate 10x compatible reference. 10x has removed some genes from the standard genecode annotation. Please refer to their [website](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#header) for detail process procedures.
+We included a bash script for user to generate 10x compatible reference. 10x has removed some genes 
+from the standard genecode annotation. Please refer to their 
+[website](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#header) 
+for detail process procedures.
 
 To generate human reference with conda, use command below:
 
@@ -107,28 +181,12 @@ User could use their own genome fasta and GTF file to create STAR reference by i
 ## Usage
 
 Please note the whitelist files have to be decompressed before passing to the program.
-To run thunderbio dataset, decompress with `gunzip whitelist/V2_barcode_seq_210407_concat.txt.gz`
+To run ThunderBio dataset, decompress with `gunzip whitelist/V2_barcode_seq_210407_concat.txt.gz`
 and use the `/path/to/V2_barcode_seq_210407_concat.txt` as the whitelist file in `starscope run` command.
 
 Please also note `--mem` option of `run` command needs a special format: e.g. `32.GB`. 
 
-### Example command
-
-Run thunderbio data with conda env:
-```
-starscope <run> --conda \
-                --input sampleList.csv \
-                --genomeDir /path/to/STAR/reference \
-                --genomeGTF /path/to/genomeGTF \
-                --whitelist /path/to/whitelist \
-                --trimLength 50 \
-                --soloCBstart 1 \
-                --soloCBlen 29 \
-                --soloUMIstart 30 \
-                --soloUMIlen 10 \
-                -bg
-```
-
+Please note user could use `-bg` to run the command in the background, and `--executor slurm` will submit the jobs to HPC `slurm` job scheduler.
 
 ### Example sample list
 
@@ -137,14 +195,103 @@ in the command above. The sample list file only contains three
 column: `sample`, `fastq_1`, `fastq_2`. User only needs to specify sample name, 
 path of read1 and read2. The program will assume that read1 file is the one 
 containing barcode and UMI information. Both absolute and relative path are supported. 
-If the library has multiple runs (i.e. multiple files of R1 and R2), user could indicate 
-the path of those files with identical sample name, and they will be `cat` into one 
+If the library has multiple runs (i.e. multiple files of R1 and R2), user could indicate the path of those files with identical sample name, and they will be `cat` into one 
 in the analysis.
 
 ```
 sample,fastq_1,fastq_2
 sampleID,read1.fq.gz,/absolute/path/to/read2.fq.gz
 ```
+
+For GEX+VDJ analysis, `sampleList.csv` will require an additional column `feature_types`.
+
+```
+sample,fastq_1,fastq_2,feature_types
+vdj_sample1,gex_R1.fq.gz,gex_R2.fq.gz,GEX
+vdj_sample1,vdj_t_R1.fq.gz,vdj_t_R2.fq.gz,VDJ-T
+vdj_sample1,vdj_b_R1.fq.gz,vdj_b_R2.fq.gz,VDJ-B
+```
+
+### Example command
+
+#### Create STAR reference index
+
+```
+starscope mkref --conda \
+                --genomeFasta /path/to/genome/fasta \
+                --genomeGTF /path/to/genome/gtf \
+                --refoutDir reference_out_dir 
+```
+
+
+
+#### ThunderBio 3'-scRNA-seq
+
+Run thunderbio 3'-scRNA-seq data with conda env:
+
+```
+starscope run --conda \
+              --input sampleList.csv \
+              --genomeDir /path/to/STAR/reference/dir \
+              --genomeGTF /path/to/genomeGTF \
+              --whitelist /path/to/whitelist \
+              --trimLength 50 \
+              --soloCBstart 1 \
+              --soloCBlen 29 \
+              --soloUMIstart 30 \
+              --soloUMIlen 10 
+```
+
+#### ThunderBio 5'-scRNA-seq
+
+Run thunderbio 5'-scRNA-seq data with conda env:
+
+```
+starscope run --conda \
+              --input sampleList.csv \
+              --genomeDir /path/to/STAR/reference/dir \
+              --genomeGTF /path/to/genomeGTF \
+              --whitelist /path/to/whitelist \
+              --trimLength 50 \
+              --soloCBstart 1 \
+              --soloCBlen 29 \
+              --soloUMIstart 30 \
+              --soloUMIlen 10 \
+              --soloStrand Reverse
+```
+
+#### ThunderBio GEX+VDJ
+
+Run thunderbio 5'-scRNA-seq together with single cell VDJ libraries:
+
+```
+starscope vdj_gex --conda \
+                  --input sampleList.csv \
+                  --genomeDir /path/to/STAR/reference/dir \
+                  --genomeGTF /path/to/genomeGTF \
+                  --whitelist /path/to/whitelist \
+                  --trust4_vdj_refGenome_fasta /path/to/refGenome_vdj_fasta \
+                  --trust4_vdj_imgt_fasta /path/to/imgt_vdj_fasta \
+                  --trimLength 28 \
+                  --soloCBstart 1 \
+                  --soloCBlen 29 \
+                  --soloUMIstart 30 \
+                  --soloUMIlen 10 \
+```
+
+The pre-built vdj reference fasta file for trust4 was also included in `starscope/scRNA-seq/vdj/reference`.
+
+For human hg38:
+
+- `trust4_vdj_refGenome_fasta` : `starscope/scRNA-seq/vdj/reference/hg38_bcrtcr.fa`
+
+- `trust4_vdj_imgt_fasta` : `starscope/scRNA-seq/vdj/reference/human_IMGT+C.fa`
+
+For mouse mm10:
+
+- `trust4_vdj_refGenome_fasta` : `starscope/scRNA-seq/vdj/reference/GRCm38_bcrtcr.fa`
+
+- `trust4_vdj_imgt_fasta` : `starscope/scRNA-seq/vdj/reference/mouse_IMGT+C.fa`
 
 ### Resources
 
@@ -164,7 +311,7 @@ implemented by nextflow.
 Running pipeline:
 starscope <run> --conda \
                 --input sampleList.csv \
-                --genomeDir /path/to/STAR/reference \
+                --genomeDir /path/to/STAR/reference/dir \
                 --genomeGTF /path/to/genomeGTF \
                 --whitelist /path/to/whitelist \
                 --trimLength 28 \
@@ -185,9 +332,11 @@ starscope <mkref> --conda \
                   --refoutDir reference_out_dir \
                   -bg
 
-starscope has two valid subcommands:
-    run:      run the scRNAseq analysis pipeline with nextflow
-    mkref:    prepare STAR reference
+starscope has four valid subcommands:
+    run:            run the scRNAseq analysis pipeline with nextflow
+    mkref:          prepare STAR reference
+    vdj_gex:        perform vdj+gex analysis
+    check_version:  check software versions
 
 Please use -h option following each subcommand to get detail
 of the options: e.g. starscope run -h
@@ -274,6 +423,65 @@ options:
 
 ```
 
+### `vdj_gex` command
+
+```
+Basic Usage:
+===========
+Example sampleList.csv:
+sample,fastq_1,fastq_2,feature_types
+vdj_sample1,gex.R1.fq.gz,gex.R2.fq.gz,GEX
+vdj_sample1,t.R1.fq.gz,t.R2.fq.gz,VDJ-T
+vdj_sample1,b.R1.fq.gz,b.R2.fq.gz,VDJ-B
+
+starscope <vdj_gex> --conda \
+                    --input sampleList.csv \
+                    --genomeDir /path/to/STAR/reference/dir \
+                    --genomeGTF /path/to/genomeGTF \
+                    --whitelist /path/to/whitelist \
+                    --trust4_vdj_refGenome_fasta /path/to/refGenome_vdj_fasta \
+                    --trust4_vdj_imgt_fasta /path/to/imgt_vdj_fasta \
+                    --trimLength 28 \
+                    --soloCBstart 1 \
+                    --soloCBlen 29 \
+                    --soloUMIstart 30 \
+                    --soloUMIlen 10 \
+
+options:
+  --conda               Use conda env to run (true)
+  --docker              Use docker container to run
+  --input               Input sample list, csv format, required
+                        columns include "sample" for sampleName,
+                        "fastq_1" for read1, "fastq_2" for read2,
+                            "feature_types" for library type
+                            (GEX/VDJ-T/VDJ-B), and read1 is assumed
+                            to contain cell barcode.
+  --genomeDir           Path of STAR reference directory
+  --genomeGTF           Path of reference genome GTF file
+  --whitelist           Path of whitelist of barcodes
+  --trimLength          Min read length retained after cutadapt
+                        trimming (28)
+  --soloCBstart         Cell barcode start base in read1 (1)
+  --soloCBlen           Cell barcode length (29)
+  --soloUMIstart        UMI start base in read1 (30)
+  --soloUMIlen          UMI length (10)
+  --soloFeatures        Define whether only count UMI in exon region:
+                        Gene or GeneFull which includes both exon and
+                        intron reads (GeneFull)
+  --soloMultiMappers    Counting method for reads mapping to multiple genes:
+                        Unique or EM (Unique)
+  --config              Provide a custom nextflow config file to
+                        define all parameters
+  --executor            Define executor of nextflow (local), see:
+                        https://www.nextflow.io/docs/latest/executor.html
+  --cpus                CPUs to use for all processes (8)
+  --mem                 Memory to use for all processes, please note
+                        the special format (32.GB)
+  --noDepCheck          Do not check Java and nextflow before
+                        running (false)
+  -bg                   Running the pipeline in background (false)
+```
+
 ### `check_version` command
 
 ```
@@ -311,7 +519,7 @@ params {
 }
 
 process {
-  executor = "slurm" // remove this line if use local executor
+  //executor = "slurm" // uncomment this line to submit jobs to slurm job scheduler
   conda = "/path/to/miniconda3/envs/starscope_env"
   // adjust resources here
   withLabel: process_high {
@@ -345,8 +553,7 @@ params {
 }
 
 process {
-  executor = 'slurm'
-  //conda = "/home/xzx/Tools/miniconda3/envs/scRNA_thunderbio_env"
+  //executor = 'slurm' // uncomment this line to submit jobs to slurm job scheduler
   container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a"
   withLabel: process_high {
     cpus = 8
@@ -367,8 +574,7 @@ docker.userEmulation = true
 docker.runOptions = '-u $(id -u):$(id -g) --init'
 ```
 
-
-All parameters could be found in the `nextflow.config` file.
+All parameters could be found in the `starscope/scRNA-seq/nextflow.config` file.
 
 ## Output
 
@@ -386,6 +592,16 @@ All parameters could be found in the `nextflow.config` file.
 Please note that `StarScope` only supports one sample (library) each sampleList for now.
 
 ## Release Note
+
+### StarScope v1.1.0
+
+- Added VDJ workflow (GEX+VDJ)
+
+- Removed time limit for process resources
+
+- Modified the margin of the tables in the 3'-scRNA-Seq report
+
+- Adjusted knee plot to fixed size and center positioned
 
 ### StarScope v1.0.0
 
