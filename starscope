@@ -471,6 +471,7 @@ run(){
 			  memory = $run_mem
 			  conda = "$conda_env_path"
 			}
+			conda.enabled = true
 			EOF
         elif [[ $run_env == "docker" ]]
         then
