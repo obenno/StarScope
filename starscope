@@ -252,14 +252,14 @@ check_nextflow(){
     then
         echo "No nextflow detected, installing..."
         curl -s https://get.nextflow.io | bash
-        nextflow="./nextflow"
-        nextflow_version=$(./nextflow -v)
+        nextflow="NXF_VER=22.04.5 ./nextflow"
+        nextflow_version=$(NXF_VER=22.04.5 ./nextflow -v)
         echo "Nextflow downloaded in the current directory: $nextflow_version"
         echo "Please move nextflow executable file to your PATH directory."
     else
         echo "Nextflow installed: "$(which nextflow)
-        nextflow="nextflow"
-        nextflow_version=$(nextflow -v)
+        nextflow="NXF_VER=22.04.5 nextflow"
+        nextflow_version=$(NXF_VER=22.04.5 nextflow -v)
         echo "$nextflow_version"
     fi
 }
