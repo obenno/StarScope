@@ -593,6 +593,20 @@ Please note that `StarScope` only supports one sample (library) each sampleList 
 
 ## Release Note
 
+### StarScope v1.1.2
+
+- Use soft link instead of cat when there is only one fastq file
+
+- Added support for VDJ subworkflow to only analyze BCR or TCR dataset
+
+- Added support for publishing saturation json file
+
+### StarScope v1.1.1
+
+- Honer the memory option in the report process
+
+- Added option for publishing starsolo BAM output
+
 ### StarScope v1.1.0
 
 - Added VDJ workflow (GEX+VDJ)
