@@ -607,6 +607,8 @@ Please note that `StarScope` only supports one sample (library) each sampleList 
 
 - Added option for publishing starsolo BAM output
 
+- Added option to enable conda env for nextflow 22.10, and the nextflow version was fixed to 22.04
+
 ### StarScope v1.1.0
 
 - Added VDJ workflow (GEX+VDJ)
