@@ -133,6 +133,26 @@ ln -s /git/repo/starscope ~/.local/bin/
 
 ## Prepare STAR reference
 
+User could use their own genome FASTA and GTF file to create STAR reference by invoking `starscope mkref` command. Example below used Zebrafish genome files as input.
+
+```bash
+## Zebrafish genome files are from Ensembl release 107
+## https://uswest.ensembl.org/Danio_rerio/Info/Index
+## Download genome FASTA file
+wget -c http://ftp.ensembl.org/pub/release-107/fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz
+## Download GTF file
+wget -c http://ftp.ensembl.org/pub/release-107/gtf/danio_rerio/Danio_rerio.GRCz11.107.gtf.gz
+```
+
+`mkref` command:
+
+```bash
+starscope mkref --docker \
+                --genomeFasta Danio_rerio.GRCz11.dna.primary_assembly.fa \
+                --gtf Danio_rerio.GRCz11.107.gtf \
+                --refoutDir Danio_rerio.GRCz11.107_STAR
+```
+
 We included a bash script for user to generate 10x compatible reference. 10x has removed some genes 
 from the standard genecode annotation. Please refer to their 
 [website](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build#header) 
@@ -176,8 +196,6 @@ starscope_options:
 example:
 prepare_10x_compatible_reference.sh human --cpus 8 --mem 32.GB -bg
 ```
-
-User could use their own genome fasta and GTF file to create STAR reference by invoking `starscope mkref` command.
 
 ## Usage
 
