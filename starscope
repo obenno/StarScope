@@ -20,6 +20,13 @@ do # resolve $SOURCE until the file is no longer a symlink
 done
 DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
 
+## set terminal output colors
+## source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+BRed='\033[1;31m' # bold red color
+BBlue='\033[1;34m' # bold blue color
+On_Yellow='\033[43m' # background yellow color
+NC='\033[0m' # No Color
+
 echo_stderr(){
     echo $@ >&2
 }
@@ -235,12 +242,12 @@ check_java(){
         echo_stderr "Please install java 8 or higher"
         exit 1
     else
-        java_version_string=$(java --version 2>&1 | head -1 | awk '{print $2}')
-        java_version=$(echo $java_version_string | awk '{split($1,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}else{print tmp[1]}}')
+        java_version_string=$(java --version 2>&1 | head -1)
+        java_version=$(echo $java_version_string | awk '{split($2,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}else{print tmp[1]}}')
 
         if [[ $java_version == "1.8" ]] || [[ $java_version -ge 9 ]]
         then
-            echo "Java version: $java_version"
+            echo -e "Java version: ${BRed}$java_version_string${NC}"
         else
             echo_stderr "Please install java 8 or higher"
             exit 1
@@ -260,10 +267,10 @@ check_nextflow(){
         echo "Nextflow downloaded in the current directory: $nextflow_version"
         echo "Please move nextflow executable file to your PATH directory."
     else
-        echo "Nextflow installed: "$(which nextflow)
+        echo -e "Nextflow installed: ${On_Yellow}$(which nextflow)${NC}"
         nextflow="nextflow"
-        nextflow_version=$(nextflow -v)
-        echo "$nextflow_version"
+        nextflow_version=$(nextflow -v | awk '{print $3}')
+        echo -e "nextflow version: ${BRed}$nextflow_version${NC}"
     fi
 }
 
@@ -277,7 +284,7 @@ check_conda(){
         echo_stderr "Please install conda first: https://docs.conda.io/en/latest/miniconda.html"
         exit 1
     else
-        echo "Conda installed: "$(which conda)
+        echo -e "Conda installed: ${On_Yellow}$(which conda)${NC}"
         conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
         if [[ -z $conda_env ]]
         then
@@ -291,7 +298,7 @@ check_conda(){
             fi
         fi
         conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $NF}')
-        echo "Detected conda env: "$conda_env_path
+        echo -e "Detected conda env: ${On_Yellow}$conda_env_path${NC}"
     fi
 }
 
@@ -306,7 +313,7 @@ check_docker(){
         ## ensure image is pulled and up-to-date
         echo "Pulling image..."
         docker_image="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a"
-        echo "Image used: $docker_image"
+        echo -e "Image used: ${On_Yellow}$docker_image${NC}"
         docker pull $docker_image
     else
         echo_stderr "It seems that docker daemon is not running?..."
@@ -349,13 +356,13 @@ check_version(){
         qualimap_version=$(conda run -n $conda_env_name qualimap -h | awk '$1=="QualiMap"{print $2}')
         printf "%80s\n" | tr " " "="
         cat <<-EOF
-		starscope: $starscope_version
-		cutadapt: $cutadapt_version
-		fastqc: $fastqc_version
-		samtools: $samtools_version
-		bedtools: $bedtools_version
-		STAR: $star_version
-		qualimap: $qualimap_version
+		starscope: $(echo -e "${BBlue}${starscope_version}${NC}")
+		cutadapt: $(echo -e "${BBlue}${cutadapt_version}${NC}")
+		fastqc: $(echo -e "${BBlue}${fastqc_version}${NC}")
+		samtools: $(echo -e "${BBlue}${samtools_version}${NC}")
+		bedtools: $(echo -e "${BBlue}${bedtools_version}${NC}")
+		STAR: $(echo -e "${BBlue}${star_version}${NC}")
+		qualimap: $(echo -e "${BBlue}${qualimap_version}${NC}")
 		EOF
         printf "%80s\n" | tr " " "="
         echo "R sessionInfo:"
@@ -376,13 +383,13 @@ check_version(){
         qualimap_version=$(docker run --rm $docker_image qualimap -h | awk '$1=="QualiMap"{print $2}')
         printf "%80s\n" | tr " " "="
         cat <<-EOF
-		starscope: $starscope_version
-		cutadapt: $cutadapt_version
-		fastqc: $fastqc_version
-		samtools: $samtools_version
-		bedtools: $bedtools_version
-		STAR: $star_version
-		qualimap: $qualimap_version
+		starscope: $(echo -e "${BBlue}${starscope_version}${NC}")
+		cutadapt: $(echo -e "${BBlue}${cutadapt_version}${NC}")
+		fastqc: $(echo -e "${BBlue}${fastqc_version}${NC}")
+		samtools: $(echo -e "${BBlue}${samtools_version}${NC}")
+		bedtools: $(echo -e "${BBlue}${bedtools_version}${NC}")
+		STAR: $(echo -e "${BBlue}${star_version}${NC}")
+		qualimap: $(echo -e "${BBlue}${qualimap_version}${NC}")
 		EOF
         printf "%80s\n" | tr " " "="
         echo "R sessionInfo:"
