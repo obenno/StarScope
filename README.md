@@ -12,32 +12,33 @@ The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
 ### Dependencies
 
 - Java 11 or higher
-- conda/miniconda
-- or docker
-- nextflow
+- Nextflow
+- Conda/Miniconda
+- or Docker Engine
 
 `StarScope` will automatically check dependencies, install nextflow and
 create conda environment if conda is selected as running environment. 
 But user will have to install [`Java`](https://openjdk.java.net/install/) and 
-[`miniconda`](https://docs.conda.io/en/latest/miniconda.html) 
+[`Miniconda`](https://docs.conda.io/en/latest/miniconda.html) 
 manually. It is suggested to install
 [`mamba`](https://mamba.readthedocs.io/en/latest/installation.html) 
 via `conda install -n base -c conda-forge mamba` to speedup environment
-creating process. By default, the nextflow binary will be downloaded in the working directory, user could move it to \$PATH.
+initiation process. By default, the nextflow binary will be downloaded in the working directory, user could move it to \$PATH.
 Alternatively, user could use docker container as running environment. But `docker` has to be installed on the system:
-
 
 #### Java
 
-StarScope was tested with openjdk, please don't use oracle version.
+StarScope was tested with both openJDK and oracle Java SE version.
 
 ```
 ## download link may vary depending on java version
-wget -c https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_linux-x64_bin.tar.gz
-tar xvzf openjdk-18.0.2.1_linux-x64_bin.tar.gz
+wget -c https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz
+## Java SE version
+## wget -c https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+tar xvzf openjdk-17.0.2_linux-x64_bin.tar.gz
 ## set environment variable
-export JAVA_HOME="$(pwd)/jdk-18.0.2.1"
-export PATH="$PATH:$(pwd)/jdk-18.0.2.1/bin"
+export JAVA_HOME="$(pwd)/jdk-17.0.2"
+export PATH="$(pwd)/jdk-17.0.2/bin:$PATH"
 ## it is suggested to add export cmd above to your .bashrc
 ```
 
@@ -95,13 +96,13 @@ mv ./nextflow ~/.local/bin/
 Confirm that nextflow runs properly
 
 ```
-nextflow run hello
+NXF_VER=22.04.5 nextflow run hello
 ```
 
 The output will be:
 
 ```
-N E X T F L O W ~ version 22.04.0
+N E X T F L O W ~ version 22.04.5
 Launching `https://github.com/nextflow-io/hello` [distraught_ride] DSL2
 - revision: 4eab81bd42 [master]
 executor > local (4)
