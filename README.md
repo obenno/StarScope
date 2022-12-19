@@ -534,6 +534,10 @@ process {
     cpus = 4
     memory = 20.GB
   }
+  withName: REPORT {
+    // adjust report memory config according to dataset size
+    memory = 40.GB
+  }
 }
 ```
 
@@ -566,6 +570,10 @@ process {
   withLabel: process_low {
     cpus = 4
     memory = 20.GB
+  }
+  withName: REPORT {
+    // adjust report memory config according to dataset size
+    memory = 40.GB
   }
 }
 
