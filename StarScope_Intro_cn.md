@@ -54,11 +54,11 @@ StarScope 支持 conda 和 docker 运行环境，保证了数据分析的高重�
 
 StarScope 基于 nextflow，支持多种运行环境，并可直接接入HPC的作业调度系统。用户可以直接使用 `--executor slurm` 参数将任务提交给系统的 slurm 作业调度系统，同时也兼容 sge，pbs 等。支持完全容器化运行，并可轻松部署到云端 kubernetes。
 
-## Geting Start
+## Getting Start
 
 ### 安装依赖
 
-#### Java（openJDK）
+#### Java (openJDK)
 
 Ubuntu 20.04 LTS 中使用系统自带的APT软件包管理器安装：
 
