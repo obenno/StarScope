@@ -620,6 +620,10 @@ Please note that `StarScope` only supports one sample (library) each sampleList 
 
 ## Release Note
 
+### StarScope v1.1.3
+
+- Added `--outBAMsortingBinsN 300` option to STARsolo process to solve the RAM issue when sorting a very large BAM file, refer to [STAR #870](https://github.com/alexdobin/STAR/issues/870)
+
 ### StarScope v1.1.2
 
 - Use soft link instead of cat when there is only one fastq file
