@@ -620,6 +620,12 @@ Please note that `StarScope` only supports one sample (library) each sampleList 
 
 ## Release Note
 
+### StarScope v1.1.4
+
+- Updated script for saturation calculation, and included UMI and gene hist data for `{preseqR}` prediction
+
+- Now a tsv summary file will be outputted in the report process
+
 ### StarScope v1.1.3
 
 - Added `--outBAMsortingBinsN 300` option to STARsolo process to solve the RAM issue when sorting a very large BAM file, refer to [STAR #870](https://github.com/alexdobin/STAR/issues/870)
