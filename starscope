@@ -242,8 +242,9 @@ check_java(){
         echo_stderr "Please install java 8 or higher"
         exit 1
     else
-        java_version_string=$(java --version 2>&1 | head -1)
-        java_version=$(echo $java_version_string | awk '{split($2,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}else{print tmp[1]}}')
+        java_version_string=$(java -version 2>&1 | head -1)
+        java_version=$(echo $java_version_string | awk '{gsub("\"", "", $3);split($3,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}
+else{print tmp[1]}}')
 
         if [[ $java_version == "1.8" ]] || [[ $java_version -ge 9 ]]
         then
