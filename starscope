@@ -268,7 +268,7 @@ check_nextflow(){
         echo "Nextflow downloaded in the current directory: $nextflow_version"
         echo "Please move nextflow executable file to your PATH directory."
     else
-        echo -e "Nextflow installed: ${On_Yellow}$(which nextflow)${NC}"
+        echo -e "Nextflow installed: ${BRed}$(which nextflow)${NC}"
         nextflow="nextflow"
         nextflow_version=$($nextflow -v | awk '{print $3}')
         echo -e "nextflow version: ${BRed}$nextflow_version${NC}"
@@ -285,7 +285,7 @@ check_conda(){
         echo_stderr "Please install conda first: https://docs.conda.io/en/latest/miniconda.html"
         exit 1
     else
-        echo -e "Conda installed: ${On_Yellow}$(which conda)${NC}"
+        echo -e "Conda installed: ${BRed}$(which conda)${NC}"
         conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
         if [[ -z $conda_env ]]
         then
@@ -299,7 +299,7 @@ check_conda(){
             fi
         fi
         conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $NF}')
-        echo -e "Detected conda env: ${On_Yellow}$conda_env_path${NC}"
+        echo -e "Detected conda env: ${BRed}$conda_env_path${NC}"
     fi
 }
 
@@ -314,7 +314,7 @@ check_docker(){
         ## ensure image is pulled and up-to-date
         echo "Pulling image..."
         docker_image="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a"
-        echo -e "Image used: ${On_Yellow}$docker_image${NC}"
+        echo -e "Image used: ${BRed}$docker_image${NC}"
         docker pull $docker_image
     else
         echo_stderr "It seems that docker daemon is not running?..."
