@@ -7,6 +7,44 @@ and **Seurat** package (https://satijalab.org/seurat/) as the core modules to pr
 data and generate a concise HTML report. 
 The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
 
+## Quick Start with ThunderBio Example Data
+
+ThunderBio will provide human and mouse pre-built reference and two sets example data upon request.
+The `demo_data` fold contains two directories, human and mouse. In each directory, user could invoke
+the pipeline by running command below. Please note the reference index has to be placed in the
+same parent folder of the `demo_data`.
+
+```
+## Human Data Testing with conda or docker
+cd demo_data/human
+starscope run --input sampleList.csv --config thunderbio_human_conda.config
+starscope run --input sampleList.csv --config thunderbio_human_docker.config
+```
+
+```
+## Mouse Data Testing with conda or docekr
+cd demo_data/mouse
+
+```
+
+
+```
+demo_data/
+├── human
+│   ├── human_test.R1.fq.gz
+│   ├── human_test.R2.fq.gz
+│   ├── sampleList.csv
+│   ├── thunderbio_human_conda.config
+│   └── thunderbio_human_docker.config
+├── mouse
+│   ├── mouse_test.R1.fq.gz
+│   ├── mouse_test.R2.fq.gz
+│   ├── sampleList.csv
+│   ├── thunderbio_mouse_conda.config
+│   └── thunderbio_mouse_docker.config
+└── V2_barcode_seq_210407_concat.txt
+```
+
 ## Installation
 
 ### Dependencies

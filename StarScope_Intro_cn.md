@@ -2,10 +2,39 @@
 
 ## Introduction
 
-StarScope 是达普生物（thunderbio）自主开发的，其基于[STARsolo ](https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md)和 [Seurat](https://satijalab.org/seurat/) 的 [nextflow ](https://www.nextflow.io/) pipeline， 提供一站式的单细胞RNA-seq分析方案，可完成从原始的reads到细胞基因表达矩阵输出，并生成一个完整的HTML格式数据报告，表达结果还可接入多种下游分析。
+StarScope 是达普生物（ThunderBio）自主开发的，其基于[STARsolo ](https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md)和 [Seurat](https://satijalab.org/seurat/) 的 [nextflow ](https://www.nextflow.io/) pipeline， 提供一站式的单细胞RNA-seq分析方案，可完成从原始的reads到细胞基因表达矩阵输出，并生成一个完整的HTML格式数据报告，表达结果还可接入多种下游分析。
 
 - `starscope run` 启动3‘-RNA-seq pipeline，包括使用 cutadapt 对原始 reads 进行过滤和质控，利用 STARsolo 将过滤后的 reads map 回 reference genome，自动完成 barcode 和 UMI 序列的识别和纠正，并根据 mapping 结果生成 feature-barcode 矩阵。根据表达矩阵，Starcope会调用Seurat进行初步的细胞分群聚类，并返回每个群的marker gene。
 - `starscope mkref` 协助用户构建定制化的 reference index。用户的研究样本可能并非常规的人类或者小鼠样本，例如基因编辑后的样本或者是非模式物种，这时可以利用 StarScope mkref 创建定制化的reference index再进行单细胞 RNAseq 分析。
+
+## Play with ThunderBio Example Data
+
+StarScope 需要安装java 11或以上版本以及nextflow， 运行环境需要conda或者docker。请确认依赖已安装完毕，安装指引请参考Quick Start部分。用户可以联系ThunderBio团队索取pre-built reference和demo_data数据。
+
+解压缩后，Human Demo Data 位于`demo_data/human`，测试reads为`human_test.R1.fq.gz`和`human_test.R2.fq.gz`，STAR reference位于`GRCh38_gencode_32_ensembl98_reference/starsolo`。请使用如下命令测试conda和docker运行环境。
+
+Human Data Testing with Conda:
+
+```
+starscope run --input sampleList.csv --config thunderbio_human_conda.config
+```
+
+Human Data Testing with Docker:
+
+```
+starscope run --input sampleList.csv --config thunderbio_human_docker.config
+```
+
+Mouse Demo Data 位于demo_data/mouse，STAR reference位于`mm10_gencode_M23_ensembl98_reference/starsolo`，进入数据文件夹后用户可以使用类似的命令测试pipeline和mouse 的reference。
+
+```
+## Run with conda env
+starscope run --input sampleList.csv --config thunderbio_mouse_conda.config
+## Run with docker container
+starscope run --input sampleList.csv --config thunderbio_mouse_docker.config
+```
+
+
 
 ## Features
 
@@ -32,7 +61,7 @@ StarScope软件能够构建一个和 10x cellRanger 类似的 reference index，
 
 使用 `mkref` 构建 Zebrafish reference index，需要先访问 Ensembl 网站的 Zebrafish 主页下载 FASTA 和 GTF文件：
 
-<img src="misc/images/Danio_rerio-Ensembl-genome-browser-107.png" style="zoom:50%;" />
+mm10_gencode_M23_ensembl98_reference/starsolo，进入数据文件夹后用户可以使<img src="misc/images/Danio_rerio-Ensembl-genome-browser-107.png" style="zoom:50%;" />
 
 - 下载基因组序列 FASTA 文件（http://ftp.ensembl.org/pub/release-107/fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz）
 - 下载基因注释 GTF 文件（http://ftp.ensembl.org/pub/release-107/gtf/danio_rerio/Danio_rerio.GRCz11.107.gtf.gz）
@@ -191,6 +220,10 @@ pipeline 运行中的信息如下：
 
 - HTML 报告 ： `results/report/HN-15K-V20-GR2_report.html`
 
-- 细胞基因表达矩阵 (h5seurat 格式)： `results/report/HN-15K-V20-GR2.raw.h5seurat`
+- 细胞基因表达矩阵：`results/starsolo/HN-15K-V20-GR2/filtered`
 
-- 细胞基因表达矩阵：`results/starsolo/filtered/`
+- 原始barcode和基因表达矩阵: `results/starsolo/HN-15K-V20-GR2/raw`
+
+- pipeline运行统计: `results/pipeline_info/execution_timeline_2023-06-07_10-17-05.html`
+
+
