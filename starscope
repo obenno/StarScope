@@ -280,20 +280,31 @@ check_conda(){
     ## Check if env is ready
     conda_env_name=$(head -1 $DIR/scRNA-seq/scRNAseq_env.yml| awk '{print $2}')
     echo "Checking conda and conda env..."
-    if [[ -z $(which conda) ]]
+    if [[ -z $(which micromamba) ]] && [[ -z $(which mamba) ]] && [[ -z $(which conda) ]]
     then
         echo_stderr "Please install conda first: https://docs.conda.io/en/latest/miniconda.html"
         exit 1
     else
         echo -e "Conda installed: ${BRed}$(which conda)${NC}"
-        conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+        if [[ -n $(which micromamba) ]]
+        then
+            conda_env=$(micromamba env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+        elif [[ -n $(which mamba) ]]
+        then
+            conda_env=$(mamba env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+        elif [[ -n $(which conda) ]]
+            conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+        fi
         if [[ -z $conda_env ]]
         then
             echo_stderr "Preparing conda env..."
             ## use mamba if installed
-            if [[ -n $(which mamba) ]]
+            if [[ -n $(which micromamba) ]]
             then
-                mamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml # mamba install
+                micromamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml # mamba install
+            elif [[ -n $(which mamba) ]]
+            then
+                mamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml
             else
                 conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
