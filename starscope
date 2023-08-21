@@ -293,6 +293,7 @@ check_conda(){
         then
             conda_env=$(mamba env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
         elif [[ -n $(which conda) ]]
+        then
             conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
         fi
         if [[ -z $conda_env ]]
