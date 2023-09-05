@@ -288,13 +288,13 @@ check_conda(){
         echo -e "Conda installed: ${BRed}$(which conda)${NC}"
         if [[ -n $(which micromamba) ]]
         then
-            conda_env=$(micromamba env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+            conda_env=$(micromamba env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         elif [[ -n $(which mamba) ]]
         then
-            conda_env=$(mamba env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+            conda_env=$(mamba env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         elif [[ -n $(which conda) ]]
         then
-            conda_env=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $1}')
+            conda_env=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         fi
         if [[ -z $conda_env ]]
         then
@@ -310,7 +310,7 @@ check_conda(){
                 conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
         fi
-        conda_env_path=$(conda env list | awk '$1!~/^#/ && $1=="'$conda_env_name'"{print $NF}')
+        conda_env_path=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         echo -e "Detected conda env: ${BRed}$conda_env_path${NC}"
     fi
 }
