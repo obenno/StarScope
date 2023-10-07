@@ -48,7 +48,7 @@ StarScope 的报告包括多种结果参数，不仅展示细胞数量，细胞�
 
 ### 输入简单
 
-Starcope 的输入格式非常简单，用户仅需要提供一个包含 sampleID 和 FASTQ 文件路径的 CSV 文件，白名单文件和构建好的STAR reference index文件就可直接运行。sample list 文件示例如下（fastq_1 是barcode read，fastq_2是cDNA read）：
+Starcope 的输入格式非常简单，用户仅需要提供一个包含 sampleID 和 FASTQ 文件路径的 CSV 文件，白名单文件和构建好的STAR reference index文件就可直接运行 。目前支持一个run运行一个sample，**请在运行新的sample前新建一个文件夹，并切换至新建文件夹再运行命令**。sample list 文件示例如下（fastq_1 是barcode read，fastq_2是cDNA read）：
 
 ```
 sample,fastq_1,fastq_2
@@ -113,6 +113,8 @@ java --version
 ```
 
 #### Nextflow
+
+nextflow执行文件已经包含在StarScope文件夹内，请手动复制到`$PATH`路径中（例如: `~/.local/bin`）。或者用户也可自行下载最新的版本：
 
 下载nextflow执行文件：
 
@@ -183,14 +185,38 @@ ln -s starscope/starscope ~/.local/bin/
 
 ###  StarScope 运行
 
-StarScope包括三个主要的命令：`run` ，`mkref` 和 `check_versions`，直接使用 `starscope -h` 可以直接查看关于命令使用和sample list的简短介绍， 使用`starscope run -h` 可以查看到`run`命令的完整选项列表，`mkref` 命令见上述 Zebrafish 的示例。**第一次运行时程序会自动创建 conda environment （调用 `--conda` 选项）或者 pull docker image （调用 `--docker` 选项），请保持网络连接**。用户也可以选择手动创建 conda env 或者 pull docker image。
+StarScope包括三个主要的命令：`run` ，`mkref` 和 `check_versions`，直接使用 `starscope -h` 可以直接查看关于命令使用和sample list的简短介绍， 使用`starscope run -h` 可以查看到`run`命令的完整选项列表，`mkref` 命令见上述 Zebrafish 的示例。
 
-conda:
+**第一次运行时程序会自动创建 conda environment （调用 `--conda` 选项）或者 pull docker image （调用 `--docker` 选项），请保持网络连接**。用户也可以选择手动创建 conda env 或者 pull docker image。另外用户可以选择直接解压ThunderBio打包好的env压缩包（with `conda pack`）。
+
+**conda:**
+
+使用`conda pack`压缩包：
+
+```
+# Unpack environment into directory `starscope_env`
+$ mkdir -p starscope_env
+$ tar -xzf starscope_env.tar.gz -C starscope_env
+
+# Activate the environment. This adds `starscope_env/bin` to your path
+$ source starscope_env/bin/activate
+
+# Cleanup prefixes from in the active environment.
+# Note that this command can also be run without activating the environment
+# as long as some version of Python is already installed on the machine.
+(starscope_env) $ conda-unpack
+
+# deactivete env
+$ source starscope_env/bin/deactivate
+```
+
+从头创建env：
 
 ```
 conda env create -f starscope/scRNA-seq/scRNAseq_env.yml
 ```
-docker:
+**docker:**
+
 ```
 docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a
 ```
@@ -198,6 +224,22 @@ docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnase
 #### starscope run
 
 整个分析流程可以使用`starscope run` 启动，默认 nextflow 会输出进度信息，如果使用`-bg` 选项则程序会转入后台运行，**请注意`--mem` 选项的特殊格式**。
+
+使用custom conda env (`conda pack`)，请使用env的绝对路径：
+
+```
+starscope run --conda \
+              --conda_env /path/to/starscope_env \
+              --input sampleList.csv \
+              --genomeDir /path/to/STAR/reference/dir \
+              --genomeGTF /path/to/genomeGTF \
+              --whitelist /path/to/whitelist_file \
+              --cpus 8 \
+              --mem 32.GB \
+              -bg
+```
+
+使用docker：
 
 ```
 starscope run --docker \
@@ -225,5 +267,4 @@ pipeline 运行中的信息如下：
 - 原始barcode和基因表达矩阵: `results/starsolo/HN-15K-V20-GR2/raw`
 
 - pipeline运行统计: `results/pipeline_info/execution_timeline_2023-06-07_10-17-05.html`
-
 
