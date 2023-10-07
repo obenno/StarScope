@@ -79,6 +79,7 @@ run_usage(){
 	Basic Usage:
 	============
 	starscope <run> --conda \\
+	                --conda_env /path/to/env \\
 	                --input sampleList.csv \\
 	                --genomeDir /path/to/STAR/reference/dir \\
 	                --genomeGTF /path/to/genomeGTF \\
@@ -91,6 +92,7 @@ run_usage(){
 	
 	options:
 	  --conda               Use conda env to run (true)
+	  --conda_env           Optionally define a custom conda env path (null)
 	  --docker              Use docker container to run
 	  --input               Input sample list, csv format, required
 	                        columns include "sample" for sampleName,
@@ -297,7 +299,11 @@ check_conda(){
         exit 1
     else
         echo -e "Conda installed: ${BRed}$(which conda)${NC}"
-        if [[ -n $(which micromamba) ]]
+
+        if [[ -d $conda_env_path ]]
+        then
+            echo -e "conda_env_path: ${BRed}$conda_env_path${NC}"
+        elif [[ -n $(which micromamba) ]]
         then
             conda_env=$(micromamba env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         elif [[ -n $(which mamba) ]]
@@ -307,7 +313,8 @@ check_conda(){
         then
             conda_env=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
         fi
-        if [[ -z $conda_env ]]
+
+        if [[ -z $conda_env ]] && [[ -z $conda_env_path ]]
         then
             echo_stderr "Preparing conda env..."
             ## use mamba if installed
@@ -320,9 +327,11 @@ check_conda(){
             else
                 conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
             fi
+        elif [[ -z $conda_env_path ]]
+        then
+            conda_env_path=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
+            echo -e "Detected conda env: ${BRed}$conda_env_path${NC}"
         fi
-        conda_env_path=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
-        echo -e "Detected conda env: ${BRed}$conda_env_path${NC}"
     fi
 }
 
@@ -372,6 +381,11 @@ check_version(){
     if [[ $run_env == "conda" ]]
     then
         check_conda
+        if [[ -z $conda_env_name ]]
+        then
+            echo -e "check_version command doesn't support custom conda env"
+            exit 1
+        fi
         cutadapt_version=$(conda run -n $conda_env_name cutadapt --version | sed '/^$/d')
         fastqc_version=$(conda run -n $conda_env_name fastqc --version | awk '{print $2}')
         star_version=$(conda run -n $conda_env_name STAR --version)
@@ -457,6 +471,10 @@ run(){
             "--conda")
                 local run_env="conda"
                 shift 1
+                ;;
+            "--conda_env")
+                conda_env_path=$2
+                shift 2
                 ;;
             "--docker")
                 local run_env="docker"
@@ -567,6 +585,10 @@ vdj_gex(){
                 local run_env="conda"
                 shift 1
                 ;;
+            "--conda_env")
+                conda_env_path=$2
+                shift 2
+                ;;
             "--docker")
                 local run_env="docker"
                 shift 1
@@ -675,6 +697,10 @@ mkref(){
                 ##check_conda
                 local run_env="conda"
                 shift 1
+                ;;
+            "--conda_env")
+                conda_env_path=$2
+                shift 2
                 ;;
             "--docker")
                 local run_env="docker"
