@@ -35,9 +35,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          file: ./scRNA-seq/Dockerfile
+          platforms: linux/amd64
+          run:
+            ls
+          ##push: true
+          ##file: ./scRNA-seq/Dockerfile
           tags: |
             obenno/starscope_env:latest
             obenno/starscope_env:${{ env.VERSION }}
