@@ -37,7 +37,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          file: ./scRNA-seq*/Dockerfile
+          file: ./scRNA-seq@9e3a9c5/Dockerfile
           tags: |
             obenno/starscope_env:latest
             obenno/starscope_env:${{ env.VERSION }}
