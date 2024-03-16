@@ -38,7 +38,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            obenno/scspotlight:latest
-            obenno/scspotlight:${{ env.VERSION }}
-            registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/scspotlight:latest
-            registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/scspotlight:${{ env.VERSION }}
+            obenno/starscope_env:latest
+            obenno/starscope_env:${{ env.VERSION }}
+            registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_env:latest
+            registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_env:${{ env.VERSION }}
