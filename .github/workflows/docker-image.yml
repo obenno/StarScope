@@ -37,10 +37,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./scRNA-seq
           platforms: linux/amd64
           push: true
-          file: scRNA-seq/Dockerfile
           tags: |
             obenno/starscope_env:latest
             obenno/starscope_env:${{ env.VERSION }}
