@@ -45,3 +45,5 @@ jobs:
             obenno/starscope_env:${{ env.VERSION }}
             registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_env:latest
             registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_env:${{ env.VERSION }}
+          cache-from: type=registry,ref=obenno/starscope_env:latest
+          cache-to: type=inline
