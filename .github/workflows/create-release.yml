@@ -45,11 +45,28 @@ jobs:
             rm -rf "/tmp/$SC_RELEASE_NAME"
             cp -r "$PWD" "/tmp/$SC_RELEASE_NAME"
             mv "/tmp/$SC_RELEASE_NAME" .
-            # Cleanup
-            rm -rf "$SC_RELEASE_NAME"/{.circleci,.ci}
-            find "$SC_RELEASE_NAME" -name '.git*' -exec rm -rv {} \; || true
             # Create archive
-            tar -czf "$SC_RELEASE_FILE" "$SC_RELEASE_NAME"
+            # Modified from https://minhajuddin.com/2016/01/10/how-to-get-a-git-archive-including-submodules/
+            # original author: Khaja Minhajuddin
+            export ROOT_ARCHIVE_DIR="$(pwd)"
+            git archive --verbose --prefix "starscope/" --format "tar" --output "$ROOT_ARCHIVE_DIR/repo-output.tar" ${{ github.ref#refs/tags/ }}
+            git submodule foreach --recursive 'git archive --verbose --prefix=starscope/$path/ --format tar main --output $ROOT_ARCHIVE_DIR/repo-output-sub-$sha1.tar'
+            if [[ $(ls repo-output-sub*.tar | wc -l) != 0  ]]
+            then
+                for file in repo-output-sub*.tar"
+                do
+                    # combine all archives into one tar
+                    echo "> combining all tars"
+                    tar --concatenate --file repo-output.tar $file
+                done
+                # remove sub tars
+                echo "> removing all sub tars"
+                rm -rf repo-output-sub*.tar
+            fi
+            echo "> gzipping final tar"
+            gzip --force --verbose repo-output.tar
+            echo "> moving output file to $SC_RELEASE_FILE"
+            mv repo-output.tar.gz $SC_RELEASE_FILE
             echo "Created source archive $SC_RELEASE_FILE with content: $(ls -a "$SC_RELEASE_NAME")"
       - name: Upload source distribution
         if: ${{ github.event_name == 'release' }}
