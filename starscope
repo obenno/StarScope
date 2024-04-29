@@ -5,8 +5,8 @@
 
 set -eo pipefail
 
-## Fix nextflow version to 22.04.5
-export NXF_VER="22.04.5"
+## Fix nextflow version to 23.10.1
+export NXF_VER="23.10.1"
 
 ## Generate starscope script path
 ## The solution is from:
@@ -27,6 +27,18 @@ BBlue='\033[1;34m' # bold blue color
 On_Yellow='\033[43m' # background yellow color
 NC='\033[0m' # No Color
 
+
+## Added version number here
+gex_version=$(grep "manifest.version" $DIR/scRNA-seq/nextflow.config | awk '{print $NF}' | sed 's/\"//g')
+vdj_gex_version="$gex_version"
+atac_version=$(grep "manifest.version" $DIR/scATAC-seq/nextflow.config | awk '{print $NF}' | sed 's/\"//g')
+starscope_version="v20240429"
+
+conda_executable="conda"
+conda_env_path=""
+docker_image_gex="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scrnaseq_env:${gex_version#v}"
+docker_image_atac="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scatac_env:${atac_version#v}"
+
 echo_stderr(){
     echo $@ >&2
 }
@@ -38,48 +50,8 @@ usage(){
 	implemented by nextflow.
 	
 	Running pipeline:
-	starscope <run> --conda \\
-	                --input sampleList.csv \\
-	                --genomeDir /path/to/STAR/reference/dir \\
-	                --genomeGTF /path/to/genomeGTF \\
-	                --whitelist /path/to/whitelist \\
-	                --trimLength 28 \\
-	                --soloCBstart 1 \\
-	                --soloCBlen 29 \\
-	                --soloUMIstart 30 \\
-	                --soloUMIlen 10 \\
-	                -bg
-	
-	Example input list (csv):
-	sample,fastq_1,fastq_2
-	sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz
-	
-	Making Reference:
-	starscope <mkref> --conda \\
-	                  --genomeFasta /path/to/genome/fasta \\
-	                  --genomeGTF /path/to/genome/gtf \\
-	                  --refoutDir reference_out_dir \\
-	                  -bg
-	
-	starscope has four valid subcommands:
-	    run:            run the scRNAseq analysis pipeline with nextflow
-	    mkref:          prepare STAR reference
-	    vdj_gex:        perform vdj+gex analysis
-	    check_version:  check software versions
-	
-	Please use -h option following each subcommand to get detail
-	of the options: e.g. starscope run -h
-	EOF
-
-    exit 0;
-}
-
-run_usage(){
-    cat <<-EOF
-	Basic Usage:
-	============
-	starscope <run> --conda \\
-	                --conda_env /path/to/env \\
+	starscope <gex> --conda \\
+	                --conda_env /path/to/conda/env \\
 	                --input sampleList.csv \\
 	                --genomeDir /path/to/STAR/reference/dir \\
 	                --genomeGTF /path/to/genomeGTF \\
@@ -89,41 +61,141 @@ run_usage(){
 	                --soloCBlen 29 \\
 	                --soloUMIstart 30 \\
 	                --soloUMIlen 10
+
+	Example input list (csv):
+	sample,fastq_1,fastq_2
+	sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz
 	
+	Making Reference:
+	starscope <mkref> --conda \\
+	                  --conda_env /path/to/conda/env \\
+	                  --genomeFasta /path/to/genome/fasta \\
+	                  --genomeGTF /path/to/genome/gtf \\
+	                  --refoutDir reference_out_dir
+
+	starscope has four valid subcommands:
+	    gex:            run the scRNAseq analysis pipeline with nextflow
+	    mkref:          prepare STAR reference
+	    vdj_gex:        perform vdj+gex analysis
+	    atac:           perform atac analysis (with different running env)
+
+	Please use -h option following each subcommand to get detail
+	of the options: e.g. starscope run -h
+	EOF
+
+    exit 0;
+}
+
+gex_usage(){
+    cat <<-EOF
+	Basic Usage:
+	============
+	Example sampleList.csv:
+
+	sample,fastq_1,fastq_2,expected_cells
+	sample1,s1.R1.fq.gz,s1.R2.fq.gz,10000
+
+	For ThunderBio chemistry v1/v2:
+
+	starscope <gex> --conda \\
+	                --conda_env /path/to/env \\
+	                --input sampleList.csv \\
+	                --genomeDir /path/to/STAR/reference/dir \\
+	                --genomeGTF /path/to/genomeGTF \\
+	                --whitelist /path/to/whitelist \\
+	                --trimLength 28 \\
+	                --soloType CB_UMI_Simple \\
+	                --soloCBstart 1 \\
+	                --soloCBlen 29 \\
+	                --soloUMIstart 30 \\
+	                --soloUMIlen 10
+
+	For ThunderBio chemistry v3:
+
+	starscope <gex> --conda \\
+	                --conda_env /path/to/env \\
+	                --input sampleList.csv \\
+	                --genomeDir /path/to/STAR/reference/dir \\
+	                --genomeGTF /path/to/genomeGTF \\
+	                --whitelist "/path/to/BC1.tsv /path/to/BC2.tsv /path/to/BC3.tsv" \\
+	                --trimLength 28 \\
+	                --soloType CB_UMI_Complex \\
+	                --soloAdapterSequence NNNNNNNNNGTGANNNNNNNNNGACANNNNNNNNNNNNNNNNN \\
+	                --soloCBposition "2_0_2_8 2_13_2_21 2_26_2_34" \\
+	                --soloUMIposition 2_35_2_42 \\
+	                --soloCBmatchWLtype 1MM
+
 	options:
 	  --conda               Use conda env to run (true)
-	  --conda_env           Optionally define a custom conda env path (null)
+
+	  --conda_env           Please specify conda env path if using conda (null)
+
 	  --docker              Use docker container to run
+
 	  --input               Input sample list, csv format, required
 	                        columns include "sample" for sampleName,
 	                        "fastq_1" for read1, "fastq_2" for read2,
 	                        and read1 is assumed to contain cell
 	                        barcode.
+
 	  --genomeDir           Path of STAR reference directory
+
 	  --genomeGTF           Path of reference genome GTF file
+
 	  --whitelist           Path of whitelist of barcodes
+
 	  --trimLength          Min read length retained after cutadapt
 	                        trimming (28)
-	  --soloCBstart         Cell barcode start base in read1 (1)
-	  --soloCBlen           Cell barcode length (29)
-	  --soloUMIstart        UMI start base in read1 (30)
-	  --soloUMIlen          UMI length (10)
+
+	  --soloType            Type of single-cell RNA-seq, this is original STARsolo option:
+	                            CB_UMI_Simple   For ThunderBio v3, BD and inDrop platform,
+	                                            using phase sequence and anchors to detect
+	                                            barcode and UMI
+	                            CB_UMI_Complex  For 10X, ThunderBio v2, using fixed position
+	                                            to detect barcode and UMI
+
+	  --soloCBstart         Used by "--soloType CB_UMI_Simple", cell barcode
+	                        start base in read1 (1)
+
+	  --soloCBlen           Used by "--soloType CB_UMI_Simple", cell barcode length (29)
+
+	  --soloUMIstart        Used by "--soloType CB_UMI_Simple", UMI start base in read1 (30)
+
+	  --soloUMIlen          Used by "--soloType CB_UMI_Simple", UMI length (10)
+
+	  --soloAdapterSequence Used by "--soloType CB_UMI_Complex", default (null)
+	                        use "NNNNNNNNNGTGANNNNNNNNNGACANNNNNNNNNNNNNNNNN" for ThunderBio v3
+
+	  --soloCBposition      Used by "--soloType CB_UMI_Complex",
+	                        use "2_0_2_8 2_13_2_21 2_26_2_34" for ThunderBio v3
+
+	  --soloUMIposition     Used by "--soloType CB_UMI_Complex", default (null)
+	                        use "2_35_2_42" for ThunderBio v3
+
+	  --soloCBmatchWLtype   Used by both CB_UMI_Simple and CB_UMI_Complex, default (1MM_multi_Nbase_pseudocounts)
+	                        use "1MM" for CB_UMI_Complex, e.g. ThunderBio v3
+
 	  --soloFeatures        Define whether only count UMI in exon region:
 	                        Gene or GeneFull which includes both exon and
 	                        intron reads (GeneFull)
-	  --soloMultiMappers    Counting method for reads mapping to multiple genes:
-	                        Unique or EM (Unique)
+
 	  --soloStrand          Library strandness, Forward for thunderbio
 	                        3' RNA-seq, Reverse for 5' RNA-seq (Forward)
+
 	  --config              Provide a custom nextflow config file to
 	                        define all parameters
+
 	  --executor            Define executor of nextflow (local), see:
 	                        https://www.nextflow.io/docs/latest/executor.html
+
 	  --cpus                CPUs to use for all processes (8)
+
 	  --mem                 Memory to use for all processes, please note
 	                        the special format (32.GB)
+
 	  --noDepCheck          Do not check Java and nextflow before
 	                        running (false)
+
 	  -bg                   Running the pipeline in background (false)
 	
 	EOF
@@ -136,28 +208,41 @@ mkref_usage(){
 	Basic Usage:
 	===========
 	starscope <mkref> --conda \\
+	                  --conda_env /path/to/conda/env \\
 	                  --genomeFasta /path/to/genome/fasta \\
 	                  --genomeGTF /path/to/genome/gtf \\
 	                  --refoutDir reference_out_dir
 	
 	options:
 	  --conda           Use conda env to run (true)
+
+	  --conda_env       Please specify conda env path if using conda (null)
+
 	  --genomeFasta     Path of reference FASTA file
+
 	  --genomeGTF       Path of reference GTF file
+
 	  --outdir          publish dir path (results)
+
 	  --refoutDir       output reference dir name (STAR_reference),
 	                    note the final reference will locate in
 	                    outdir/refoutDir, which by default is
 	                    results/STAR_reference
+
 	  --config          Provide a custom nextflow config file to
 	                    define all parameters
+
 	  --executor        Define executor of nextflow (local), see:
 	                    https://www.nextflow.io/docs/latest/executor.html
+
 	  --cpus            CPUs to use for all processes (8)
+
 	  --mem             Memory to use for all processes, please note
 	                    the special format (40.GB)
+
 	  --noDepCheck      Do not check Java and nextflow before
 	                    running (false)
+
 	  -bg               Running the pipeline in background (false)
 	
 	EOF
@@ -170,12 +255,16 @@ vdj_gex_usage(){
 	Basic Usage:
 	===========
 	Example sampleList.csv:
-	sample,fastq_1,fastq_2,feature_types
-	vdj_sample1,gex.R1.fq.gz,gex.R2.fq.gz,GEX
-	vdj_sample1,t.R1.fq.gz,t.R2.fq.gz,VDJ-T
-	vdj_sample1,b.R1.fq.gz,b.R2.fq.gz,VDJ-B
+
+	sample,fastq_1,fastq_2,feature_types,expected_cells
+	vdj_sample1,gex.R1.fq.gz,gex.R2.fq.gz,GEX,10000
+	vdj_sample1,t.R1.fq.gz,t.R2.fq.gz,VDJ-T,5000
+	vdj_sample1,b.R1.fq.gz,b.R2.fq.gz,VDJ-B,1000
+
+	For ThunderBio chemistry v1/v2:
 	
 	starscope <vdj_gex> --conda \\
+	                    --conda_env /path/to/conda/env \\
 	                    --input sampleList.csv \\
 	                    --genomeDir /path/to/STAR/reference/dir \\
 	                    --genomeGTF /path/to/genomeGTF \\
@@ -183,90 +272,202 @@ vdj_gex_usage(){
 	                    --trust4_vdj_refGenome_fasta /path/to/refGenome_vdj_fasta \\
 	                    --trust4_vdj_imgt_fasta /path/to/imgt_vdj_fasta \\
 	                    --trimLength 28 \\
+	                    --soloType CB_UMI_Simple \\
 	                    --soloCBstart 1 \\
 	                    --soloCBlen 29 \\
 	                    --soloUMIstart 30 \\
 	                    --soloUMIlen 10
+
+	For ThunderBio chemistry v3:
+
+	starscope <vdj_gex> --conda \\
+	                    --conda_env /path/to/conda/env \\
+	                    --input sampleList.csv \\
+	                    --genomeDir /path/to/STAR/reference/dir \\
+	                    --genomeGTF /path/to/genomeGTF \\
+	                    --whitelist "/path/to/BC1.tsv /path/to/BC2.tsv /path/to/BC3.tsv" \\
+	                    --trust4_vdj_refGenome_fasta /path/to/refGenome_vdj_fasta \\
+	                    --trust4_vdj_imgt_fasta /path/to/imgt_vdj_fasta \\
+	                    --trimLength 28 \\
+	                    --soloType CB_UMI_Complex \\
+	                    --soloAdapterSequence NNNNNNNNNGTGANNNNNNNNNGACANNNNNNNNNNNNNNNNN \\
+	                    --soloCBposition "2_0_2_8 2_13_2_21 2_26_2_34" \\
+	                    --soloUMIposition 2_35_2_42 \\
+	                    --soloCBmatchWLtype 1MM
+
 	
 	options:
 	  --conda                   Use conda env to run (true)
+
+    --conda_env               Please specify conda env path if using conda (null)
+
 	  --docker                  Use docker container to run
+
 	  --input                   Input sample list, csv format, required
 	                            columns include "sample" for sampleName,
 	                            "fastq_1" for read1, "fastq_2" for read2,
 	                            "feature_types" for library type
-	                            (GEX/VDJ-T/VDJ-B), and read1 is assumed
-	                            to contain cell barcode.
+	                            (GEX/VDJ-T/VDJ-B), "expected_cells" for
+	                            number of the cells expected in each library.
+	                            Read1 is assumed to contain cell barcode.
+
 	  --genomeDir               Path of STAR reference directory
+
 	  --genomeGTF               Path of reference genome GTF file
+
 	  --whitelist               Path of whitelist of barcodes
+
 	  --trimLength              Min read length retained after cutadapt
 	                            trimming (28)
+
 	  --soloCBstart             Cell barcode start base in read1 (1)
+
 	  --soloCBlen               Cell barcode length (29)
+
 	  --soloUMIstart            UMI start base in read1 (30)
+
 	  --soloUMIlen              UMI length (10)
+
 	  --soloFeatures            Define whether only count UMI in exon region:
 	                            Gene or GeneFull which includes both exon and
 	                            intron reads (GeneFull)
-	  --soloMultiMappers        Counting method for reads mapping to multiple genes:
-	                            Unique or EM (Unique)
+
 	  --trust4_cDNAread_only    Use cDNA reads only for assembly (false)
+
 	  --trust4_readFormat       readFromat argument parsed to trust4 assembly, position
 	                            is 0-based, format is r1:start:end:strand, strand
 	                            information could be omitted. By default the last 90 nt
 	                            of R1 are also used in the assembly (r1:59:-1)
+
 	  --trust4_downSample       Downsample reads/UMIs for each cell in VDJ assembly (20000)
 
 	  --config                  Provide a custom nextflow config file to
 	                            define all parameters
+
 	  --executor                Define executor of nextflow (local), see:
 	                            https://www.nextflow.io/docs/latest/executor.html
+
 	  --cpus                    CPUs to use for all processes (8)
+
 	  --mem                     Memory to use for all processes, please note
 	                            the special format (32.GB)
+
 	  --noDepCheck              Do not check Java and nextflow before
 	                            running (false)
+
 	  -bg                       Running the pipeline in background (not used)
 	EOF
 }
 
-check_version_usage(){
-    cat <<-EOF
+atac_usage(){
+    cat<<-EOF
 	Basic Usage:
 	===========
-	starscope <check_version> [--conda|--docker]
-	
+	Example ThunderBio sampleList.csv:
+
+	sample,fastq_1,fastq_2
+	atac_sample1,atac.R1.fq.gz,atac.R2.fq.gz
+
+	Example 10X sampleList.csv:
+
+	sample,fastq_1,fastq_2,fastq_3
+	10x_sample1,s1.R1.fq.gz,s1.R2.fq.gz,s3.R3.fq.gz
+
+	For ThunderBio chemistry v3:
+
+	starscope <atac> --conda \\
+	                 --conda_env /path/to/conda/env \\
+	                 --input sampleList.csv \\
+	                 --bwaIndex /path/to/STAR/reference/dir \\
+	                 --genomeGTF /path/to/genomeGTF \\
+	                 --whitelist "/path/to/BC1.tsv /path/to/BC2.tsv /path/to/BC3.tsv" \\
+	                 --refGenome hg38 \\
+	                 --platform TB
+
+	For 10X dataset:
+
+	starscope <atac> --conda \\
+	                 --conda_env /path/to/conda/env \\
+	                 --input sampleList.csv \\
+	                 --bwaIndex /path/to/STAR/reference/dir \\
+	                 --genomeGTF /path/to/genomeGTF \\
+	                 --whitelist /path/to/10x_whitelist \\
+	                 --refGenome hg38 \\
+	                 --platform 10X
+
+
 	options:
-	  --conda     print program version of conda env
-	  --docker    print program version in docker container
+	  --conda                   Use conda env to run (true)
+
+	  --conda_env               Please specify conda env path if using conda (null)
+
+	  --docker                  Use docker container to run
+
+	  --input                   Input sample list, csv format, required
+	                            columns include "sample" for sampleName,
+	                            "fastq_1" for read1, "fastq_2" for read2,
+	                            "fastq_3" is only required for 10X data
+
+	  --bwaIndex                Path of BWA reference index directory
+
+	  --genomeGTF               Path of reference genome GTF file
+
+	  --whitelist               Path of whitelist of barcodes, 10x atac data may
+	                            need to convert whitelist to reverse complement form sometimes
+
+	  --trim_mLen               Min read length retained after cutadapt
+	                            trimming (25)
+
+	  --platform                10X or TB (TB)
+
+	  --refGenome               Reference genome, hg38, hg19, mm9 or mm10 (hg38)
+
+	  --genomeSize              Reference genome size (null)
+
+	  --blackList               Blacklist region bed file (null)
+
+	  --config                  Provide a custom nextflow config file to
+	                            define all parameters
+
+	  --executor                Define executor of nextflow (local), see:
+	                            https://www.nextflow.io/docs/latest/executor.html
+
+	  --cpus                    CPUs to use for all processes (8)
+
+	  --mem                     Memory to use for all processes, please note
+	                            the special format (32.GB)
+
+	  --noDepCheck              Do not check Java and nextflow before
+	                            running (false)
+
+	  -bg                       Running the pipeline in background (not used)
 	EOF
 }
 
 check_java(){
     ## Check if java is installed
     echo "Checking Java..."
+    local error_message="Please install java 11 or higher (e.g. via SDKMAN, https://www.nextflow.io/docs/latest/install.html#requirements)"
     if [[ -z $(which java) ]]
     then
-        echo_stderr "Please install java 8 or higher"
+        echo_stderr $error_message
         exit 1
     else
         java_version_string=$(java -version 2>&1 | head -1)
-        java_version=$(echo $java_version_string | awk '{gsub("\"", "", $3);split($3,tmp,"."); if(tmp[1]==1){print tmp[1]"."tmp[2]}
-else{print tmp[1]}}')
+        java_version=$(echo $java_version_string | awk '{gsub("\"", "", $3);split($3,tmp,"."); print tmp[1]}')
 
-        if [[ $java_version == "1.8" ]] || [[ $java_version -ge 9 ]]
+        if [[ $java_version -ge 10 ]]
         then
             echo -e "Java version: ${BRed}$java_version_string${NC}"
         else
-            echo_stderr "Please install java 8 or higher"
+            echo_stderr $error_message
             exit 1
         fi
     fi
 }
 
 check_nextflow(){
-    ## Now we distribute nextflow v22.04.5 with starscope
+    ## Now we distribute nextflow v23.10.1 with starscope
     ## Check if nextflow binary exists
     echo "Checking nextflow..."
     nextflow="$DIR/nextflow"
@@ -277,72 +478,63 @@ check_nextflow(){
         echo "nextflow not detected in StarScope directory."
         exit 1
     fi
-    #### Check if nextflow is installed
-    ##echo "Checking nextflow..."
-    ##if [[ -z $(which nextflow) ]]
-    ##then
-    ##    echo "No nextflow detected, installing..."
-    ##    curl -s https://get.nextflow.io | bash
-    ##    nextflow="./nextflow"
-    ##    nextflow_version=$($nextflow -v)
-    ##    echo "Nextflow downloaded in the current directory: $nextflow_version"
-    ##    echo "Please move nextflow executable file to your PATH directory."
-    ##else
-    ##    echo -e "Nextflow installed: ${BRed}$(which nextflow)${NC}"
-    ##    nextflow="nextflow"
-    ##    nextflow_version=$($nextflow -v | awk '{print $3}')
-    ##    echo -e "nextflow version: ${BRed}$nextflow_version${NC}"
-    ##fi
 }
 
 check_conda(){
     ## Check if conda is installed
-    ## Check if env is ready
-    conda_env_name=$(head -1 $DIR/scRNA-seq/scRNAseq_env.yml| awk '{print $2}')
+    ## Check if env dir exists
     echo "Checking conda and conda env..."
-    if [[ -z $(which micromamba) ]] && [[ -z $(which mamba) ]] && [[ -z $(which conda) ]]
+    ## check conda executable
+    if [[ -n $conda_executable ]]
     then
+        if [[ -x $conda_executable ]]
+        then
+            echo -e "Conda installed: ${BRed}$(which conda)${NC}"
+        else
+            echo_stderr "User defined conda_executable does not exist: $conda_executable"
+            exit 1
+        fi
+    elif [[ -x $(which micromamba) ]]
+    then
+         conda_executable="micromamba"
+         echo -e "Conda installed: ${BRed}$(which micromamba)${NC}"
+    elif [[ -x $(which mamba) ]]
+    then
+         conda_executable="mamba"
+         echo -e "Conda installed: ${BRed}$(which mamba)${NC}"
+    elif [[ -x $(which conda) ]]
+    then
+         conda_executable="conda"
+         echo -e "Conda installed: ${BRed}$(which micromamba)${NC}"
+    else
         echo_stderr "Please install conda first: https://docs.conda.io/en/latest/miniconda.html"
         exit 1
+    fi
+         
+    ## check conda env path
+    if [[ -d $conda_env_path ]]
+    then
+        echo -e "conda_env_path: ${BRed}$conda_env_path${NC}"
     else
-        echo -e "Conda installed: ${BRed}$(which conda)${NC}"
-
-        if [[ -d $conda_env_path ]]
-        then
-            echo -e "conda_env_path: ${BRed}$conda_env_path${NC}"
-        elif [[ -n $(which micromamba) ]]
-        then
-            conda_env=$(micromamba env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
-        elif [[ -n $(which mamba) ]]
-        then
-            conda_env=$(mamba env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
-        elif [[ -n $(which conda) ]]
-        then
-            conda_env=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
-        fi
-
-        if [[ -z $conda_env ]] && [[ -z $conda_env_path ]]
-        then
-            echo_stderr "Preparing conda env..."
-            ## use mamba if installed
-            if [[ -n $(which micromamba) ]]
-            then
-                micromamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml # mamba install
-            elif [[ -n $(which mamba) ]]
-            then
-                mamba env create -f $DIR/scRNA-seq/scRNAseq_env.yml
-            else
-                conda env create -f $DIR/scRNA-seq/scRNAseq_env.yml # create env
-            fi
-        elif [[ -z $conda_env_path ]]
-        then
-            conda_env_path=$(conda env list | awk '$1!~/^#/ && $NF~/'$conda_env_name'/{print $NF}')
-            echo -e "Detected conda env: ${BRed}$conda_env_path${NC}"
-        fi
+        echo_stderr "Conda env path provided does not exist"
+        exit 1
     fi
 }
 
 check_docker(){
+
+    local pipeline=$1
+
+    if [[ $pipeline == "gex" ]] || [[ $pipeline == "vdj_gex" ]]
+    then
+        local docker_image=$docker_image_gex
+    elif [[ $pipeline == "atac" ]]
+    then
+        local docker_image=$docker_image_atac
+    else
+        echo_stderr "Only support gex, vdj_gex and atac"
+    fi
+
     echo "Checking docker and docker image..."
     if [[ -z $(which docker) ]]
     then
@@ -352,7 +544,6 @@ check_docker(){
     then
         ## ensure image is pulled and up-to-date
         echo "Pulling image..."
-        docker_image="registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/thunderbio_scrnaseq_env:2.7.10a"
         echo -e "Image used: ${BRed}$docker_image${NC}"
         docker pull $docker_image
     else
@@ -361,92 +552,7 @@ check_docker(){
     fi
 }
 
-check_version(){
-    ## read parameters
-    case $1 in
-        "" | "-h" | "-help" | "--help")
-            check_version_usage
-            exit 0
-            ;;
-        "--conda")
-            local run_env="conda"
-            shift 1
-            ;;
-        "--docker")
-            local run_env="docker"
-            shift 1
-            ;;
-        *)
-            echo_stderr "Only support conda and docker running env now..."
-            exit 1
-            ;;
-    esac
-    check_java
-    check_nextflow
-    ## https://superuser.com/questions/360966/how-do-i-use-a-bash-variable-string-containing-quotes-in-a-command
-    R_cmd=(Rscript -e 'options(warn=-1);suppressMessages({library(tidyverse);library(scales);library(jsonlite);library(Seurat);library(future);library(DT);library(plotly);library(kableExtra);library(flexdashboard);});sessionInfo()')
-    if [[ $run_env == "conda" ]]
-    then
-        check_conda
-        if [[ -z $conda_env_name ]]
-        then
-            echo -e "check_version command doesn't support custom conda env"
-            exit 1
-        fi
-        cutadapt_version=$(conda run -n $conda_env_name cutadapt --version | sed '/^$/d')
-        fastqc_version=$(conda run -n $conda_env_name fastqc --version | awk '{print $2}')
-        star_version=$(conda run -n $conda_env_name STAR --version)
-        samtools_version=$(conda run -n $conda_env_name samtools --version | head -1 |awk '{print $2}')
-        bedtools_version=$(conda run -n $conda_env_name bedtools --version | awk '{print $2}')
-        qualimap_version=$(conda run -n $conda_env_name qualimap -h | awk '$1=="QualiMap"{print $2}')
-        printf "%80s\n" | tr " " "="
-        cat <<-EOF
-		starscope: $(echo -e "${BBlue}${starscope_version}${NC}")
-		cutadapt: $(echo -e "${BBlue}${cutadapt_version}${NC}")
-		fastqc: $(echo -e "${BBlue}${fastqc_version}${NC}")
-		samtools: $(echo -e "${BBlue}${samtools_version}${NC}")
-		bedtools: $(echo -e "${BBlue}${bedtools_version}${NC}")
-		STAR: $(echo -e "${BBlue}${star_version}${NC}")
-		qualimap: $(echo -e "${BBlue}${qualimap_version}${NC}")
-		EOF
-        printf "%80s\n" | tr " " "="
-        echo "R sessionInfo:"
-        echo ""
-        conda run -n $conda_env_name "${R_cmd[@]}"
-        printf "%80s\n" | tr " " "="
-        echo "Conda Info:"
-        conda info
-
-    elif [[ $run_env == "docker" ]]
-    then
-        check_docker
-        cutadapt_version=$(docker run --rm $docker_image cutadapt --version)
-        fastqc_version=$(docker run --rm $docker_image fastqc --version | awk '{print $2}')
-        star_version=$(docker run --rm $docker_image STAR --version)
-        samtools_version=$(docker run --rm $docker_image samtools --version 2> /dev/null | head -1 |awk '{print $2}')
-        bedtools_version=$(docker run --rm $docker_image bedtools --version | awk '{print $2}')
-        qualimap_version=$(docker run --rm $docker_image qualimap -h | awk '$1=="QualiMap"{print $2}')
-        printf "%80s\n" | tr " " "="
-        cat <<-EOF
-		starscope: $(echo -e "${BBlue}${starscope_version}${NC}")
-		cutadapt: $(echo -e "${BBlue}${cutadapt_version}${NC}")
-		fastqc: $(echo -e "${BBlue}${fastqc_version}${NC}")
-		samtools: $(echo -e "${BBlue}${samtools_version}${NC}")
-		bedtools: $(echo -e "${BBlue}${bedtools_version}${NC}")
-		STAR: $(echo -e "${BBlue}${star_version}${NC}")
-		qualimap: $(echo -e "${BBlue}${qualimap_version}${NC}")
-		EOF
-        printf "%80s\n" | tr " " "="
-        echo "R sessionInfo:"
-        echo ""
-        docker run --rm $docker_image "${R_cmd[@]}"
-        printf "%80s\n" | tr " " "="
-        echo "Docker Info:"
-        docker info
-    fi
-}
-
-run(){
+gex(){
     ## run the pipeline
     ## set default value of some parameters
     local nextflowOpt=""
@@ -460,7 +566,7 @@ run(){
     ## print help message
     if [[ -z $1 ]]
     then
-        run_usage
+        gex_usage
         exit 0
     fi
     ## read parameters
@@ -468,7 +574,7 @@ run(){
     do
         case $1 in
             "" | "-h" | "-help" | "--help")
-                run_usage
+                gex_usage
                 exit 0
                 ;;
             "--config")
@@ -519,7 +625,7 @@ run(){
     ## make process config file
     if [[ -z $configFile ]]
     then
-        configFile=$(mktemp)
+        configFile=$(mktemp -p ./ tmp.XXXXXX.config)
         if [[ $run_env == "conda" ]]
         then
             check_conda
@@ -534,13 +640,13 @@ run(){
 			EOF
         elif [[ $run_env == "docker" ]]
         then
-            check_docker
+            check_docker "gex"
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
 			  cpus   = $run_cpus
 			  memory = $run_mem
-			  container = "$docker_image"
+			  container = "$docker_image_gex"
 			}
 			docker.enabled = true
 			docker.userEmulation = true
@@ -632,7 +738,7 @@ vdj_gex(){
     ## make process config file
     if [[ -z $configFile ]]
     then
-        configFile=$(mktemp)
+        configFile=$(mktemp -p ./ tmp.XXXXXX.config)
         if [[ $run_env == "conda" ]]
         then
             check_conda
@@ -646,13 +752,13 @@ vdj_gex(){
 			EOF
         elif [[ $run_env == "docker" ]]
         then
-            check_docker
+            check_docker "vdj_gex"
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
 			  cpus   = $run_cpus
 			  memory = $run_mem
-			  container = "$docker_image"
+			  container = "$docker_image_gex"
 			}
 			docker.enabled = true
 			docker.userEmulation = true
@@ -669,6 +775,118 @@ vdj_gex(){
     echo "nextflow command:"
     echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
     $nextflow run $DIR/scRNA-seq -c $configFile -entry vdj $nextflowOpt
+}
+
+atac(){
+    ## run the pipeline
+    ## set default value of some parameters
+    local nextflowOpt=""
+    local run_cpus=8
+    local run_mem="32.GB"
+    local run_env="conda" # conda as default
+    local executor="local"
+    local noDepCheck=false
+
+    ## if no parameter provided to run command
+    ## print help message
+    if [[ -z $1 ]]
+    then
+        atac_usage
+        exit 0
+    fi
+    ## read parameters
+    while [[ ! -z $1 ]]
+    do
+        case $1 in
+            "" | "-h" | "-help" | "--help")
+                atac_usage
+                exit 0
+                ;;
+            "--config")
+                local configFile=$2
+                shift 2
+                ;;
+            "--conda")
+                local run_env="conda"
+                shift 1
+                ;;
+            "--conda_env")
+                conda_env_path=$2
+                shift 2
+                ;;
+            "--docker")
+                local run_env="docker"
+                shift 1
+                ;;
+            "--executor")
+                local executor=$2
+                shift 2
+                ;;
+            "--cpus")
+                local run_cpus=$2
+                shift 2
+                ;;
+            "--mem")
+                local run_mem=$2
+                shift 2
+                ;;
+            "--noDepCheck")
+                local noDepCheck=true
+                shift 1
+                ;;
+            *)
+                nextflowOpt="$nextflowOpt $1"
+                shift 1
+                ;;
+        esac
+    done
+
+    ## check dependency
+    if [[ $noDepCheck == false ]]
+    then
+        check_java
+        check_nextflow
+    fi
+    ## make process config file
+    if [[ -z $configFile ]]
+    then
+        configFile=$(mktemp -p ./ tmp.XXXXXX.config)
+        if [[ $run_env == "conda" ]]
+        then
+            check_conda
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  conda = "$conda_env_path"
+			}
+			EOF
+        elif [[ $run_env == "docker" ]]
+        then
+            check_docker "atac"
+            cat <<-EOF > $configFile
+			process {
+			  executor = "$executor"
+			  cpus   = $run_cpus
+			  memory = $run_mem
+			  container = "$docker_image_atac"
+			}
+			docker.enabled = true
+			docker.userEmulation = true
+			docker.runOptions = '-u $(id -u):$(id -g) --init'
+			EOF
+            echo ""
+        else
+            echo_stderr "run env only support conda and docker for now."
+            exit 1
+        fi
+    fi
+
+    echo "Using local config as : $configFile"
+    echo "nextflow command:"
+    echo "nextflow run scATAC-seq -c $configFile $nextflowOpt"
+    $nextflow run $DIR/scATAC-seq -c $configFile $nextflowOpt
 }
 
 mkref(){
@@ -745,7 +963,7 @@ mkref(){
     ## make process config file
     if [[ -z $configFile ]]
     then
-        configFile=$(mktemp)
+        configFile=$(mktemp -p ./ tmp.XXXXXX.config)
         if [[ $run_env == "conda" ]]
         then
             check_conda
@@ -793,15 +1011,13 @@ else
     shift 1;
 fi
 
-## Added version number here
-starscope_version=$(grep "manifest.version" $DIR/scRNA-seq/nextflow.config | awk '{print $NF}' | sed 's/\"//g')
 
 case $subcommand in
-    "" | "-h" | "--help" | "-help")
+    "" | "-h" | "--help")
         usage
         ;;
-    "run")
-        run $@
+    "gex")
+        gex $@
         ;;
     "mkref")
         mkref $@
@@ -809,14 +1025,20 @@ case $subcommand in
     "vdj_gex")
         vdj_gex $@
         ;;
-    "check_version")
-        check_version $@
+    "atac")
+        atac $@
         ;;
     "-v" | "--version" | "-version")
-        echo "starscope $starscope_version"
+        cat <<-EOF
+				starscope ($starscope_version)
+				=========
+				    gex: $gex_version
+				vdj_gex: $vdj_gex_version
+				   atac: $atac_version
+				EOF
         ;;
     *)
-        echo_stderr "Please provide valid subcommand: run, mkref, vdj_gex or check_version"
+        echo_stderr "Please provide valid subcommand: gex, mkref, vdj_gex or atac"
         exit 1
         ;;
 esac
