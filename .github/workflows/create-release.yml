@@ -49,7 +49,7 @@ jobs:
             # Modified from https://minhajuddin.com/2016/01/10/how-to-get-a-git-archive-including-submodules/
             # original author: Khaja Minhajuddin
             export ROOT_ARCHIVE_DIR="$(pwd)"
-            git archive --verbose --prefix "starscope/" --format "tar" --output "$ROOT_ARCHIVE_DIR/repo-output.tar" ${{ github.ref#refs/tags/ }}
+            git archive --verbose --prefix "starscope/" --format "tar" --output "$ROOT_ARCHIVE_DIR/repo-output.tar" "${{ github.ref#refs/tags/ }}"
             git submodule foreach --recursive 'git archive --verbose --prefix=starscope/$path/ --format tar main --output $ROOT_ARCHIVE_DIR/repo-output-sub-$sha1.tar'
             if [[ $(ls repo-output-sub*.tar | wc -l) != 0  ]]
             then
