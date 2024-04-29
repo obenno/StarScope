@@ -54,7 +54,7 @@ jobs:
             git submodule foreach --recursive 'git archive --verbose --prefix=starscope/$path/ --format tar main --output $ROOT_ARCHIVE_DIR/repo-output-sub-$sha1.tar'
             if [[ $(ls repo-output-sub*.tar | wc -l) != 0  ]]
             then
-                for file in repo-output-sub*.tar"
+                for file in repo-output-sub*.tar
                 do
                     # combine all archives into one tar
                     echo "> combining all tars"
