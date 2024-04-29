@@ -650,7 +650,7 @@ gex(){
 			}
 			docker.enabled = true
 			docker.userEmulation = true
-			docker.runOptions = '-u $(id -u):$(id -g) --init'
+			docker.runOptions = '--init -u $(id -u):$(id -g) $(opt=""; for group in $(id -G); do opt=$opt" --group-add $group"; done; echo $opt)'
 			EOF
             echo ""
         else
@@ -762,7 +762,7 @@ vdj_gex(){
 			}
 			docker.enabled = true
 			docker.userEmulation = true
-			docker.runOptions = '-u $(id -u):$(id -g) --init'
+			docker.runOptions = '--init -u $(id -u):$(id -g) $(opt=""; for group in $(id -G); do opt=$opt" --group-add $group"; done; echo $opt)'
 			EOF
             echo ""
         else
@@ -874,7 +874,7 @@ atac(){
 			}
 			docker.enabled = true
 			docker.userEmulation = true
-			docker.runOptions = '-u $(id -u):$(id -g) --init'
+			docker.runOptions = '--init -u $(id -u):$(id -g) $(opt=""; for group in $(id -G); do opt=$opt" --group-add $group"; done; echo $opt)'
 			EOF
             echo ""
         else
