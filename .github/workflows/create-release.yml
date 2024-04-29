@@ -5,6 +5,11 @@ on:
   push:
     tags:
       - "v*"
+  release:
+    types: [published]
+  pull_request:
+    paths: [.github/workflows/create_release.yml]
+
 
 jobs:
   release:
