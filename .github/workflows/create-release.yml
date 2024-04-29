@@ -39,6 +39,7 @@ jobs:
           tag_or_branch="${tag_or_branch//\//_}"
           echo "SC_RELEASE_NAME=starscope-$tag_or_branch" >> "$GITHUB_ENV"
           echo "SC_RELEASE_FILE=starscope-$tag_or_branch.tar.gz" >> "$GITHUB_ENV"
+          echo "TAG_OR_BRANCH=$tag_or_branch" >> "$GITHUB_ENV"
       - name: Create source distribution
         run: |
             # Create new folder with specified name so extracting the archive yields that
@@ -49,7 +50,7 @@ jobs:
             # Modified from https://minhajuddin.com/2016/01/10/how-to-get-a-git-archive-including-submodules/
             # original author: Khaja Minhajuddin
             export ROOT_ARCHIVE_DIR="$(pwd)"
-            git archive --verbose --prefix "starscope/" --format "tar" --output "$ROOT_ARCHIVE_DIR/repo-output.tar" "${{ github.ref#refs/tags/ }}"
+            git archive --verbose --prefix "starscope/" --format "tar" --output "$ROOT_ARCHIVE_DIR/repo-output.tar" "${TAG_OR_BRANCH#refs/tags/}"
             git submodule foreach --recursive 'git archive --verbose --prefix=starscope/$path/ --format tar main --output $ROOT_ARCHIVE_DIR/repo-output-sub-$sha1.tar'
             if [[ $(ls repo-output-sub*.tar | wc -l) != 0  ]]
             then
