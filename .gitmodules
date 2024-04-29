@@ -2,3 +2,6 @@
 	path = scRNA-seq
 	url = git@github.com:obenno/scRNA-seq.git
 	branch = main
+[submodule "scATAC-seq"]
+	path = scATAC-seq
+	url = https://github.com/obenno/scATAC-seq
