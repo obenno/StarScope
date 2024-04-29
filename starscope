@@ -408,7 +408,7 @@ atac_usage(){
 	                            "fastq_1" for read1, "fastq_2" for read2,
 	                            "fastq_3" is only required for 10X data
 
-	  --bwaIndex                Path of BWA reference index directory
+	  --bwaIndex                Path of BWA reference index path, including prefix
 
 	  --genomeGTF               Path of reference genome GTF file
 
