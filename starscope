@@ -63,7 +63,7 @@ usage(){
 	                --soloUMIlen 10
 
 	Example input list (csv):
-    sample,fastq_1,fastq_2,expected_cells
+	sample,fastq_1,fastq_2,expected_cells
 	sampleName,read1.fq.gz,/absolute/path/to/read2.fq.gz,3000
 	
 	Making Reference:
