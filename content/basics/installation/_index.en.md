@@ -35,12 +35,13 @@ java -version
 
 ### Nextflow
 
-Nextflow binary was included in the StarScope directory.
+Nextflow binary was included in the StarScope directory. User could also download binary
+from [nextflow's github release page](https://github.com/nextflow-io/nextflow/releases/latest).
 
 ### Conda/miniconda
 
-We usually use [miniforge's conda distro](https://github.com/conda-forge/miniforge), use could
-also install via conda official installer, or use mamba directoryly, which is much faster.
+We usually use [miniforge's conda distro](https://github.com/conda-forge/miniforge), user also
+could install via conda official installer, or use mamba directly, which is much faster.
 
 Miniforge:
 
