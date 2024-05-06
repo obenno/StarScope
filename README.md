@@ -1,11 +1,13 @@
 # StarScope
 
-`StarScope` provide a convenient way to run the 
+`StarScope` provides a convenient way to run [ThunderBio](http://thunder-bio.com/) single
+cell analysis [**nextflow**](https://www.nextflow.io/) pipelines.
 [scRNA-seq workflow](https://github.com/obenno/scRNA-seq)
-which uses **starsolo** (https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md) 
-and **Seurat** package (https://satijalab.org/seurat/) as the core modules to process scRNA-seq
-data and generate a concise HTML report. 
-The workflow was implemented by [**nextflow**](https://www.nextflow.io/).
+uses **starsolo** (https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md)
+and **Seurat** package (https://satijalab.org/seurat/) as the core modules to process 3' single
+cell RNA-seq data and generate a concise HTML report. We also integrated single cell
+immune repertopire and ATAC analysis workflows as other two subcommands, both of
+which were also built using nextflow.
 
 ## Quick Start with ThunderBio Example Data
 
