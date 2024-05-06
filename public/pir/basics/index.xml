@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Basics :: Cap&#39;n Hugo Relearrrn Theme</title>
+    <link>//localhost:4321/pir/basics/index.html</link>
+    <description>Discover what this Cap&#39;n Hugo theme be all about an&#39; th&#39; core-concepts behind it.</description>
+    <generator>Hugo</generator>
+    <language>art-pir</language>
+    <atom:link href="//localhost:4321/pir/basics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What&#39;s New</title>
+      <link>//localhost:4321/pir/basics/migration/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/migration/index.html</guid>
+      <description>Arrr! Pirrrates Fello&#39; pirrrates, grog made us dizzy! Be awarrre some stuff may look weird in this trrranslat&#39;n.</description>
+    </item>
+    <item>
+      <title>Requirrrements</title>
+      <link>//localhost:4321/pir/basics/requirements/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/requirements/index.html</guid>
+      <description>Thanks t&#39; th&#39; simplicity o&#39; Cap&#39;n Hugo, this plank be as empty as this theme needs requirements.</description>
+    </item>
+    <item>
+      <title>Installat&#39;n</title>
+      <link>//localhost:4321/pir/basics/installation/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/installation/index.html</guid>
+      <description>Th&#39; follow&#39;n steps be here t&#39; help ye initialize yer new website.</description>
+    </item>
+    <item>
+      <title>Configurrrat&#39;n</title>
+      <link>//localhost:4321/pir/basics/configuration/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/configuration/index.html</guid>
+      <description>On top o&#39; Hugo’s global configurat&#39;n opt&#39;ns, th&#39; Relearrrn theme lets ye define further opt&#39;ns unique t&#39; th&#39; theme &#39;n yer hugo.</description>
+    </item>
+    <item>
+      <title>Brrrand&#39;n</title>
+      <link>//localhost:4321/pir/basics/branding/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/branding/index.html</guid>
+      <description>Th&#39; Relearrrn theme provides configurat&#39;n opt&#39;ns t&#39; change yer site’s colors, favicon an&#39; logo.</description>
+    </item>
+    <item>
+      <title>Customizat&#39;n</title>
+      <link>//localhost:4321/pir/basics/customization/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/customization/index.html</guid>
+      <description>Usage scenarios Th&#39; theme be us&#39;ble &#39;n different scenarios, requir&#39;n th&#39; follow&#39;n mandatory sett&#39;ns &#39;n yer hugo.</description>
+    </item>
+    <item>
+      <title>Stylesheet generrrat&#39;r</title>
+      <link>//localhost:4321/pir/basics/generator/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/generator/index.html</guid>
+      <description>This interactive tool may help ye t&#39; generate yer own color variant stylesheet.</description>
+    </item>
+    <item>
+      <title>Topbarrr Modificat&#39;n</title>
+      <link>//localhost:4321/pir/basics/topbar/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/topbar/index.html</guid>
+      <description>Th&#39; theme comes wit&#39; a reasonably configured topbar.&#xA;Nevertheless, yer requirements may differ from this configurat&#39;n.</description>
+    </item>
+    <item>
+      <title>Historrry</title>
+      <link>//localhost:4321/pir/basics/history/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/history/index.html</guid>
+      <description>Changelog 6.0.0 (2024-04-27) Enhancements [feature][break&#39;n] theme: unify descript&#39;n #845 [feature] schema: add schema support &#39;n meta data #844 [feature] include: use Hugo’s resources #835 [feature] math: allow t&#39; work wit&#39; Hugo’s passthrough configurat&#39;n #832 [feature] i18n: add Romanian translat&#39;n #828 [feature][break&#39;n] menu: remove menuTitle frontmatter #714 [feature][break&#39;n] theme: end support fer Internet Explorer 11 #584 Fixes [bug] frontmatter: move frontmatter config fer exampleSite out o&#39; root #843 [bug] images: color outline us&#39;n primary color #838 [bug][break&#39;n] variant: avoid Cap&#39;n Hugo permission errors on build #831 [bug] theme: unwanted paragraph break wit&#39; AsciiDoc #829 Maintenance [task][break&#39;n] swagger: remove shortcode #847 [task][break&#39;n] search: remove JSON outputformat fer search index #846 [task] theme: sync t&#39; Hugo’s implementat&#39;n #841 [task][change] fontawesome: update t&#39; 6.</description>
+    </item>
+  </channel>
+</rss>

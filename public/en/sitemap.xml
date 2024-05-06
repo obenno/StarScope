@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>//localhost:4321/basics/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/test/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/test/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/test/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/test/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/pages/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/pages/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/pages/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/pages/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/frontmatter/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/frontmatter/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/frontmatter/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/frontmatter/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/migration/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/migration/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/migration/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/migration/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/archetypes/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/archetypes/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/archetypes/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/archetypes/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/markdown/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/markdown/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/markdown/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/markdown/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/imageeffects/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/imageeffects/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/imageeffects/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/imageeffects/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/menushortcuts/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/menushortcuts/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/menushortcuts/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/menushortcuts/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/i18n/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/i18n/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/i18n/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/i18n/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/cont/taxonomy/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/cont/taxonomy/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/cont/taxonomy/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/cont/taxonomy/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/requirements/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/requirements/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/requirements/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/requirements/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/installation/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/installation/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/installation/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/installation/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/configuration/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/configuration/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/configuration/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/configuration/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-2/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-2/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-2/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-2/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/branding/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/branding/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/branding/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/branding/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/customization/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/customization/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/customization/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/customization/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/generator/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/generator/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/generator/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/generator/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/topbar/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/topbar/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/topbar/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/topbar/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/basics/history/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/basics/history/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/basics/history/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/basics/history/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-3/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-3/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-3/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-3/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-4/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-4/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-4/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-4/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/the-hidden/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/tags/the-hidden/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/tags/the-hidden/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/tags/the-hidden/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/attachments/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/attachments/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/attachments/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/attachments/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/badge/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/badge/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/badge/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/badge/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/basic/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/basic/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/basic/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/basic/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/button/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/button/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/button/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/button/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/children/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/tags/children/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/tags/children/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/tags/children/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/config/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/tags/config/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/tags/config/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/tags/config/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/content/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/tags/content/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/tags/content/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/tags/content/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/content/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/content/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/content/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/content/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/dev/contributing/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/dev/contributing/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/dev/contributing/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/dev/contributing/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/more/credits/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/more/credits/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/more/credits/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/more/credits/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/custom/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/custom/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/custom/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/custom/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/dev/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/dev/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/dev/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/dev/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/documentation/index.html</loc>
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/expand/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/expand/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/expand/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/expand/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/highlight/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/highlight/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/highlight/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/highlight/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/icon/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/icon/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/icon/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/icon/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/include/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/include/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/include/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/include/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/dev/maintaining/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/dev/maintaining/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/dev/maintaining/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/dev/maintaining/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/math/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/math/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/math/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/math/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/mermaid/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/mermaid/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/mermaid/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/mermaid/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/non-hidden/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/tags/non-hidden/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/tags/non-hidden/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/tags/non-hidden/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/notice/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/notice/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/notice/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/notice/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/openapi/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/openapi/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/openapi/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/openapi/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/children-1-1-1-1-1-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/children-1-1-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/children-1-1-1-1-1-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-1/children-1-1-1-1/children-1-1-1-1-1/children-1-1-1-1-1-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-1/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-1/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-1/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-2/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-2/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-2/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-2/children-1-1-2-2/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-3/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-3/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-1/children-1-1/children-1-1-3/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-1/children-1-1/children-1-1-3/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/children/children-3/test3/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/children/children-3/test3/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/children/children-3/test3/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/children/children-3/test3/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/resources/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/resources/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/resources/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/resources/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/siteparam/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/siteparam/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/siteparam/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/siteparam/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/tab/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/tab/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/tab/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/tab/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/shortcodes/tabs/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/shortcodes/tabs/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/shortcodes/tabs/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/shortcodes/tabs/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/taxonomy/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/taxonomy/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/taxonomy/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/taxonomy/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/categories/theming/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="x-default" href="//localhost:4321/categories/theming/index.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="//localhost:4321/categories/theming/index.html" />
+    <xhtml:link rel="alternate" hreflang="art-pir" href="//localhost:4321/pir/categories/theming/index.html" />
+  </url>
+  <url>
+    <loc>//localhost:4321/tags/tutorial/index.html</loc>
+  </url>
+</urlset>

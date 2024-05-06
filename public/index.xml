@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo Relearn Theme :: StarScope</title>
+    <link>/index.html</link>
+    <description>A theme for Hugo designed for documentation.</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Basics</title>
+      <link>/basics/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/basics/index.html</guid>
+      <description>Instruction of the workflows.</description>
+    </item>
+    <item>
+      <title>gex module for scRNA-seq</title>
+      <link>/gex/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/gex/index.html</guid>
+      <description>Chapter homepage for gex workflow.</description>
+    </item>
+    <item>
+      <title>VDJ Module for Immune Repertoire Analysis</title>
+      <link>/vdj/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/vdj/index.html</guid>
+      <description>Chapter homepage for vdj module.</description>
+    </item>
+    <item>
+      <title>ATAC Module for scATAC-seq Data</title>
+      <link>/atac/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/atac/index.html</guid>
+      <description>Chapter homepage for atac module.</description>
+    </item>
+  </channel>
+</rss>

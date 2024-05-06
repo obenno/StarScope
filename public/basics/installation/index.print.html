@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr" itemscope itemtype="http://schema.org/Article">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="generator" content="Hugo 0.121.0">
+    <meta name="generator" content="Relearn 6.0.0+tip">
+    <meta name="description" content="Requirements Java 11 or higher Nextflow Conda/miniconda Docker Java Nextflow will need java 11 or higher to be installed.">
+    <meta name="author" content="Zhixia Xiao">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Installation :: StarScope">
+    <meta name="twitter:description" content="Requirements Java 11 or higher Nextflow Conda/miniconda Docker Java Nextflow will need java 11 or higher to be installed.">
+    <meta property="og:url" content="/basics/installation/index.html">
+    <meta property="og:site_name" content="StarScope">
+    <meta property="og:title" content="Installation :: StarScope">
+    <meta property="og:description" content="Requirements Java 11 or higher Nextflow Conda/miniconda Docker Java Nextflow will need java 11 or higher to be installed.">
+    <meta property="og:locale" content="en-us">
+    <meta property="og:type" content="website">
+    <meta itemprop="name" content="Installation :: StarScope">
+    <meta itemprop="description" content="Requirements Java 11 or higher Nextflow Conda/miniconda Docker Java Nextflow will need java 11 or higher to be installed.">
+    <meta itemprop="wordCount" content="123">
+    <title>Installation :: StarScope</title>
+    <link href="../../basics/installation/index.html" rel="canonical" type="text/html" title="Installation :: StarScope">
+    <link href="../../basics/installation/index.xml" rel="alternate" type="application/rss+xml" title="Installation :: StarScope">
+    <link href="../../images/logo.svg?1714963182" rel="icon" type="image/svg+xml">
+    <link href="../../css/fontawesome-all.min.css?1714963182" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="../../css/fontawesome-all.min.css?1714963182" rel="stylesheet"></noscript>
+    <link href="../../css/nucleus.css?1714963182" rel="stylesheet">
+    <link href="../../css/auto-complete.css?1714963182" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="../../css/auto-complete.css?1714963182" rel="stylesheet"></noscript>
+    <link href="../../css/perfect-scrollbar.min.css?1714963182" rel="stylesheet">
+    <link href="../../css/fonts.css?1714963182" rel="stylesheet" media="print" onload="this.media='all';this.onload=null;"><noscript><link href="../../css/fonts.css?1714963182" rel="stylesheet"></noscript>
+    <link href="../../css/theme.css?1714963182" rel="stylesheet">
+    <link href="../../css/theme-blue.css?1714963182" rel="stylesheet" id="R-variant-style">
+    <link href="../../css/chroma-learn.css?1714963182" rel="stylesheet" id="R-variant-chroma-style">
+    <link href="../../css/variant.css?1714963182" rel="stylesheet">
+    <link href="../../css/print.css?1714963182" rel="stylesheet" media="print">
+    <link href="../../css/format-print.css?1714963182" rel="stylesheet">
+    <script src="../../js/variant.js?1714963182"></script>
+    <script>
+      window.relearn = window.relearn || {};
+      window.relearn.relBasePath='..\/..';
+      window.relearn.relBaseUri='..\/..';
+      window.relearn.absBaseUri='';
+      window.index_js_url="../../index.search.js";
+      // variant stuff
+      window.variants && variants.init( [ 'blue' ] );
+      // translations
+      window.T_Copy_to_clipboard = `Copy to clipboard`;
+      window.T_Copied_to_clipboard = `Copied to clipboard!`;
+      window.T_Copy_link_to_clipboard = `Copy link to clipboard`;
+      window.T_Link_copied_to_clipboard = `Copied link to clipboard!`;
+      window.T_Reset_view = `Reset view`;
+      window.T_View_reset = `View reset!`;
+      window.T_No_results_found = `No results found for "{0}"`;
+      window.T_N_results_found = `{1} results found for "{0}"`;
+    </script>
+    <style>
+      #R-body img.bg-white {
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body class="mobile-support print disableInlineCopyToClipboard" data-url="../../basics/installation/index.html">
+    <div id="R-body" class="default-animation">
+      <div id="R-body-overlay"></div>
+      <nav id="R-topbar">
+        <div class="topbar-wrapper">
+          <div class="topbar-sidebar-divider"></div>
+          <div class="topbar-area topbar-area-start" data-area="start">
+            <div class="topbar-button topbar-button-sidebar" data-content-empty="disable" data-width-s="show" data-width-m="hide" data-width-l="hide"><button class="topbar-control" onclick="toggleNav()" type="button" title="Menu (CTRL&#43;ALT&#43;n)"><i class="fa-fw fas fa-bars"></i></button>
+            </div>
+          </div>
+          <ol class="topbar-breadcrumbs breadcrumbs highlightable" itemscope itemtype="http://schema.org/BreadcrumbList"><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><a itemprop="item" href="../../basics/index.html"><span itemprop="name">Basics</span></a><meta itemprop="position" content="1">&nbsp;>&nbsp;</li><li
+            itemscope itemtype="https://schema.org/ListItem" itemprop="itemListElement"><span itemprop="name">Installation</span><meta itemprop="position" content="2"></li>
+          </ol>
+          <div class="topbar-area topbar-area-end" data-area="end">
+            <div class="topbar-button topbar-button-prev" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="../../basics/index.html" title="Basics (🡐)"><i class="fa-fw fas fa-chevron-left"></i></a>
+            </div>
+            <div class="topbar-button topbar-button-next" data-content-empty="disable" data-width-s="show" data-width-m="show" data-width-l="show"><a class="topbar-control" href="../../gex/index.html" title="gex module for scRNA-seq (🡒)"><i class="fa-fw fas fa-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div id="R-main-overlay"></div>
+      <main id="R-body-inner" class="highlightable default" tabindex="-1">
+        <div class="flex-block-wrapper">
+          <article class="default">
+            <header class="headline">
+            </header>
+
+<h1 id="installation">Installation</h1>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Java 11 or higher</li>
+<li>Nextflow</li>
+<li>Conda/miniconda</li>
+<li>Docker</li>
+</ul>
+<h3 id="java">Java</h3>
+<p>Nextflow will need java 11 or higher to be installed. The recommanded way to install
+java is through <a href="https://sdkman.io/" rel="external" target="_self">SDKMAN</a>. Please use the command below:</p>
+<p>Install SDKMAN:</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code>curl -s https://get.sdkman.io | bash</code></pre></div><p>Open a new terminal and install Java</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code>sdk install java 17.0.10-tem</code></pre></div><p>Check java installation and comfirm it&rsquo;s version</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code>java -version</code></pre></div><h3 id="nextflow">Nextflow</h3>
+<p>Nextflow binary was included in the StarScope directory.</p>
+<h3 id="condaminiconda">Conda/miniconda</h3>
+<p>We usually use <a href="https://github.com/conda-forge/miniforge" rel="external" target="_self">miniforge&rsquo;s conda distro</a>, use could
+also install via conda official installer, or use mamba directoryly, which is much faster.</p>
+<p>Miniforge:</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code>wget -c https://github.com/conda-forge/miniforge/releases/download/24.3.0-0/Mambaforge-24.3.0-0-Linux-x86_64.sh
+bash Mambaforge-24.3.0-0-Linux-x86_64.sh</code></pre></div><p>Official minicoda:</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code>wget -c wget -c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh</code></pre></div><p>Micromamba, user may need to put micromamba binary into $PATH</p>
+<div class="highlight wrap-code"><pre tabindex="0"><code># Linux Intel (x86_64):
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba</code></pre></div>
+            <footer class="footline">
+            </footer>
+          </article>
+
+        </div>
+      </main>
+    </div>
+    <script src="../../js/clipboard.min.js?1714963182" defer></script>
+    <script src="../../js/perfect-scrollbar.min.js?1714963182" defer></script>
+    <script src="../../js/theme.js?1714963182" defer></script>
+  </body>
+</html>

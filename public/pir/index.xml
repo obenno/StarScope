@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cap&#39;n Hugo Relearrrn Theme</title>
+    <link>//localhost:4321/pir/index.html</link>
+    <description>A theme fer Cap&#39;n Hugo designed fer documentat&#39;n.</description>
+    <generator>Hugo</generator>
+    <language>art-pir</language>
+    <atom:link href="//localhost:4321/pir/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Basics</title>
+      <link>//localhost:4321/pir/basics/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/basics/index.html</guid>
+      <description>Discover what this Cap&#39;n Hugo theme be all about an&#39; th&#39; core-concepts behind it.</description>
+    </item>
+    <item>
+      <title>Rambl&#39;n</title>
+      <link>//localhost:4321/pir/cont/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/cont/index.html</guid>
+      <description>Find out how t&#39; create an&#39; org&#39;nize yer rrrambl&#39;n quickly an&#39; intuitively.</description>
+    </item>
+    <item>
+      <title>Shorrrtcodes</title>
+      <link>//localhost:4321/pir/shortcodes/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/shortcodes/index.html</guid>
+      <description>Cap&#39;n Hugo uses Marrrkdown fer its simple rrrambl&#39;n format. However, there be a lot o&#39; th&#39;ns that Marrrkdown doesn’t support well.</description>
+    </item>
+    <item>
+      <title>Devs</title>
+      <link>//localhost:4321/pir/dev/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/dev/index.html</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

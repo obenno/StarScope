@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Config :: Tag :: Hugo Relearn Theme</title>
+    <link>//localhost:4321/tags/config/index.html</link>
+    <description></description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="//localhost:4321/tags/config/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configuration</title>
+      <link>//localhost:4321/basics/configuration/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/basics/configuration/index.html</guid>
+      <description>On top of Hugo’s global configuration options, the Relearn theme lets you define further options unique to the theme in your hugo.</description>
+    </item>
+  </channel>
+</rss>

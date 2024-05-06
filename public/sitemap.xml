@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>/basics/index.html</loc>
+  </url>
+  <url>
+    <loc>/gex/index.html</loc>
+  </url>
+  <url>
+    <loc>/basics/installation/index.html</loc>
+  </url>
+  <url>
+    <loc>/vdj/index.html</loc>
+  </url>
+  <url>
+    <loc>/atac/index.html</loc>
+  </url>
+  <url>
+    <loc>/tags/the-hidden/index.html</loc>
+  </url>
+  <url>
+    <loc>/categories/index.html</loc>
+  </url>
+  <url>
+    <loc>/index.html</loc>
+  </url>
+</urlset>

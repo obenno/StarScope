@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tag-a-taggs :: Cap&#39;n Hugo Relearrrn Theme</title>
+    <link>//localhost:4321/pir/tags/index.html</link>
+    <description>Ye can define optional rrrambl&#39;n &#39;n yer overridden taxonomy plank. As well ye can define optional title an&#39; singulartitle that will override th&#39; values from yer hugo.</description>
+    <generator>Hugo</generator>
+    <language>art-pir</language>
+    <atom:link href="//localhost:4321/pir/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tagga :: Children</title>
+      <link>//localhost:4321/pir/tags/children/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/children/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tagga :: Config</title>
+      <link>//localhost:4321/pir/tags/config/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/config/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tagga :: Content</title>
+      <link>//localhost:4321/pir/tags/content/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/content/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tagga :: Documentat&#39;n</title>
+      <link>//localhost:4321/pir/tags/documentatn/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/documentatn/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tagga :: hush, matey</title>
+      <link>//localhost:4321/pir/tags/the-hidden/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/the-hidden/index.html</guid>
+      <description>This lists all planks that be hidden from th&#39; home plank.</description>
+    </item>
+    <item>
+      <title>Tagga :: Non-Hidden</title>
+      <link>//localhost:4321/pir/tags/non-hidden/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/non-hidden/index.html</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tagga :: Tutorrrial</title>
+      <link>//localhost:4321/pir/tags/tutorrrial/index.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:4321/pir/tags/tutorrrial/index.html</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
