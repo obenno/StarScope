@@ -20,6 +20,10 @@ human_pbmc_s2,human_pbmc_s2_R1_001.fastq.gz,human_pbmc_s2_R2_001.fastq.gz
 human_tissue_s1,human_tissue_s1_R1_001.fastq.gz,human_tissue_s1_R2_001.fastq.gz
 ```
 
+{{% notice style="note" %}}
+All samples in the sampleList will use the same options. Therefore, a combination of samples from different species is not supported.
+{{% /notice %}}
+
 ## Command
 
 ### Invoke with config file
