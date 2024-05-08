@@ -35,8 +35,41 @@ java -version
 
 ### Nextflow
 
-Nextflow binary was included in the StarScope directory. User could also download binary
+Nextflow binary was already included in the StarScope directory. User also could download binary
 from [nextflow's github release page](https://github.com/nextflow-io/nextflow/releases/latest).
+
+By default, `starscope` will invoke the nextflow executable stored in the same directory, user
+could add both of the two executables to `$PATH` (e.g. ~/.local/bin)
+
+```
+## starscope executable
+ln -s starscope/starscope ~/.local/bin/starscope
+## nextflow
+ln -s starscope/nextflow ~/.local/bin/nextflow
+```
+
+Confirm that nextflow runs properly with the command below (require network access to github):
+
+```
+NXF_VER=22.04.5 nextflow run hello
+```
+
+The output will be:
+
+```
+N E X T F L O W ~ version 22.04.5
+Launching `https://github.com/nextflow-io/hello` [distraught_ride] DSL2
+- revision: 4eab81bd42 [master]
+executor > local (4)
+[92/5fbfca] process > sayHello (4) [100%] 4 of 4 ✔
+Bonjour world!
+
+Hello world!
+
+Ciao world!
+
+Hola world!
+```
 
 ### Conda/miniconda
 
@@ -64,3 +97,40 @@ Micromamba, user may need to put micromamba binary into $PATH
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 ```
 
+One could create conda environment with the yaml file in the workflow directory.
+
+```
+## scRNA-seq/VDJ environment
+mamba create -f scRNA-seq/scRNAseq_env.yml
+
+## scATAC-seq environment
+mamba create -f scATAC-seq/scATAC_env.yml
+```
+
+### Docker
+
+Using docker is much easier to integrate the workflow to large infrastructure
+like cloud platforms or HPC, thus is recommended. To install:
+
+```
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+```
+
+To use docker command without sudo, add your account to docker group:
+
+```
+sudo usermod -aG docker $(whoami)
+```
+
+Then login out and login again for the changes to take effect.
+
+Please pull the pre-built image with:
+
+```
+## scATAC-seq image
+docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scatac_env:latest
+
+## scRNA-seq/VDJ image
+docker pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scrnaseq_env:latest
+```
