@@ -289,7 +289,7 @@ disableHoverBlockCopyToClipBoard = false
 # Note that lines always wrap in print mode regardless of this option.
 # This can be overridden in the page's frontmatter or given as a parameter to
 # individual code blocks.
-highlightWrap = true
+highlightWrap = false
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Include
