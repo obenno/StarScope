@@ -58,8 +58,7 @@ The output will be:
 
 ```
 N E X T F L O W ~ version 22.04.5
-Launching `https://github.com/nextflow-io/hello` [distraught_ride] DSL2
-- revision: 4eab81bd42 [master]
+Launching `https://github.com/nextflow-io/hello` [distraught_ride] DSL2 - revision: 4eab81bd42 [master]
 executor > local (4)
 [92/5fbfca] process > sayHello (4) [100%] 4 of 4 ✔
 Bonjour world!
@@ -123,7 +122,7 @@ To use docker command without sudo, add your account to docker group:
 sudo usermod -aG docker $(whoami)
 ```
 
-Then login out and login again for the changes to take effect.
+Then log out and login again for the changes to take effect.
 
 Please pull the pre-built image with:
 
