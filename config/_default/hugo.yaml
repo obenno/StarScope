@@ -1,10 +1,14 @@
-baseURL: https://example.org/
+baseURL: https://starscope.netlify.app/
 relativeURLs: yes
 uglyURLs: no
 theme: hugo-theme-relearn
 defaultContentLanguage: en
 title: StarScope
 summaryLength: 10
+ignoreFiles:
+  - \.Rmd$
+  - \.Rmarkdown$
+  - _cache$
 outputs:
   home:
     - html
