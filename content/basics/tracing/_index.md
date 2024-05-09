@@ -1,6 +1,6 @@
 ---
 title: Pipeline Tracing
-weight: 3
+weight: 10
 ---
 
 By default, each run of the pipeline will generate 

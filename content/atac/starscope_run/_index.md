@@ -242,5 +242,5 @@ results/
 ## WorkDir
 
 By default, the intermediate files will be written to subdirectory of 
-`workdir` under the pipeline running directory, please feel free to
+`work` under the pipeline running directory, please feel free to
 remove it after all the processes finished successfully.
