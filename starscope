@@ -487,9 +487,9 @@ check_conda(){
     ## check conda executable
     if [[ -n $conda_executable ]]
     then
-        if [[ -x $conda_executable ]]
+        if [[ -x $(which $conda_executable) ]]
         then
-            echo -e "Conda installed: ${BRed}$(which conda)${NC}"
+            echo -e "Conda installed: ${BRed}$(which $conda_executable)${NC}"
         else
             echo_stderr "User defined conda_executable does not exist: $conda_executable"
             exit 1
