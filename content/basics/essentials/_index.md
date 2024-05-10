@@ -34,6 +34,7 @@ User could also check the error message from running log file `.nextflow.log`
 
 ```bash
 $ head .nextflow.log
+
 May-09 08:42:37.523 [main] DEBUG nextflow.cli.Launcher - $> nextflow run /thunderData/pipeline/starscope/scRNA-seq -c /thunderData/pipeline/nf_scRNAseq_config/latest/thunderbio_human_config --input sampleList.csv
 May-09 08:42:37.924 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
 May-09 08:42:38.096 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/xzx/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
@@ -131,6 +132,12 @@ To resume from previous run, please use the command below after entering the pro
 
 ```bash
 starscope gex --input sampleList.csv --config custom_config -bg -resume
+```
+
+Or resume from a specific run with session ID (check from `nextflow log` output):
+
+```bash
+starscope gex --input sampleList.csv --config custom_config -bg -resume 8670925f-ce5a-4f7a-b327-a98b288e6aa6
 ```
 
 Additional resources:
