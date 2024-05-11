@@ -10,8 +10,13 @@ The first column `sample` indicates sample IDs, and multiple fastq
 files with the same sample ID will be concatenated before further
 processing (e.g. two pairs of `human_pbmc_s1` fastq files will be 
 cat to a single pair). Multiple samples in one single sample list 
-will be submitted parallelly and processed asynchronously.
+will be submitted parallelly and processed asynchronously. The workflow
+supports both ThunderBio and 10X ATAC data, please use the suggested
+configuration below. User could check 10X ATAC library structure
+from https://teichlab.github.io/scg_lib_structs/.
 
+{{< tabs >}}
+{{% tab title="example_docker.ThunderBio_v3.config" %}}
 ```
 sample,fastq_1,fastq_2
 human_pbmc_s1,human_pbmc_s1_R1_001.fastq.gz,human_pbmc_s1_R2_001.fastq.gz
@@ -19,6 +24,17 @@ human_pbmc_s1,human_pbmc_s1_R1_002.fastq.gz,human_pbmc_s1_R2_002.fastq.gz
 human_pbmc_s2,human_pbmc_s2_R1_001.fastq.gz,human_pbmc_s2_R2_001.fastq.gz
 human_tissue_s1,human_tissue_s1_R1_001.fastq.gz,human_tissue_s1_R2_001.fastq.gz
 ```
+{{% /tab %}}
+{{% tab title="example_docker.10X_v2.config" %}}
+```
+sample,fastq_1,fastq_2,fastq_3
+10X_pbmc_10k_v1,10X_pbmc_10k_v1_R1_001.fastq.gz,10X_pbmc_10k_v1_R2_001.fastq.gz,10X_pbmc_10k_v1_R3_001.fastq.gz
+10X_pbmc_10k_v1,10X_pbmc_10k_v1_R1_002.fastq.gz,10X_pbmc_10k_v1_R2_002.fastq.gz,10X_pbmc_10k_v1_R3_002.fastq.gz
+10X_pbmc_10k_v2,10X_pbmc_10k_v2_R1_001.fastq.gz,10X_pbmc_10k_v2_R2_001.fastq.gz,10X_pbmc_10k_v2_R3_001.fastq.gz
+10X_pbmc_10k_v2,10X_pbmc_10k_v2_R1_002.fastq.gz,10X_pbmc_10k_v2_R2_002.fastq.gz,10X_pbmc_10k_v2_R3_002.fastq.gz
+```
+{{% /tab %}}
+{{< /tabs >}}
 
 {{% notice style="note" %}}
 All samples in the sampleList will use the same options. Therefore, a combination of samples from different species is not supported.
@@ -205,7 +221,12 @@ starscope/whitelist/
 └── V2_barcode_seq_210407_concat.txt.gz
 ```
 
-Please use `--whitelsit "/path/to/starscope/whitelist/TB_v3_20240429.BC1.tsv /path/to/starscope/whitelist/TB_v3_20240429.BC2.tsv /path/to/starscope/whitelist/TB_v3_20240429.BC3.tsv"` here, and don't forget to add double quote.
+Please use the whilelist option below, and don't forget to add double quote.
+
+```
+--whitelsit "/path/to/starscope/whitelist/TB_v3_20240429.BC1.tsv /path/to/starscope/whitelist/TB_v3_20240429.BC2.tsv /path/to/starscope/whitelist/TB_v3_20240429.BC3.tsv"
+```
+
 
 ## Outputs
 

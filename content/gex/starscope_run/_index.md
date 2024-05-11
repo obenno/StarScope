@@ -82,18 +82,6 @@ process {
     cpus = 4
     memory = 20.GB
   }
-    withLabel: process_high {
-    cpus = 32
-    memory = 32.GB
-  }
-  withLabel: process_medium {
-    cpus = 32
-    memory = 20.GB
-  }
-  withLabel: process_low {
-    cpus = 4
-    memory = 20.GB
-  }
   withName: CHECK_SATURATION {
     cpus = 4
     memory = 10.GB
