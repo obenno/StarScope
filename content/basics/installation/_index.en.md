@@ -105,10 +105,10 @@ One could create conda environment with the yaml file in the workflow directory.
 
 ```bash
 ## scRNA-seq/VDJ environment
-mamba create -f starscope/scRNA-seq/scRNAseq_env.yml
+mamba env create -f starscope/scRNA-seq/scRNAseq_env.yml
 
 ## scATAC-seq environment
-mamba create -f starscope/scATAC-seq/scATAC_env.yml
+mamba env create -f starscope/scATAC-seq/scATAC_env.yml
 ```
 
 Or extract environment from archive distributed by ThunderBio with `conda-pack`
