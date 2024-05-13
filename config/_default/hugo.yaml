@@ -90,6 +90,9 @@ module:
       target: assets/CHANGELOG.md
     - source: ../README.md
       target: assets/README.md
+services:
+  googleAnalytics:
+    ID: G-D141RBHZJ9
 params:
   siteparam:
     test:
