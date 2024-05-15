@@ -773,7 +773,7 @@ vdj_gex(){
 
     echo "Using local config as : $configFile"
     echo "nextflow command:"
-    echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
+    echo "nextflow run scRNA-seq -c $configFile -entry vdj $nextflowOpt"
     $nextflow run $DIR/scRNA-seq -c $configFile -entry vdj $nextflowOpt
 }
 
