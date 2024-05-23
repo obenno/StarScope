@@ -43,11 +43,11 @@ chemistry, each with a distinct barcode structure. Please refer to the
 corresponding configuration examples provided below.
 
 ```
-starscope gex --input sampleList.csv --config example_docker.config
+starscope vdj_gex --input sampleList.csv --config example_docker.config
 ```
 
 {{< tabs >}}
-{{% tab title="example_docker.ThunderBio_v3.config" %}}
+{{% tab title="example_docker.ThunderBio_VDJv1.config" %}}
 ```json
 params {
   genomeDir = "/refdata/human/starsolo/"
@@ -159,7 +159,7 @@ process {
 
 ### Invoke with command line options
 
-To invoke scATAC pipeline with conda environment:
+To invoke VDJ pipeline with conda environment:
 
 {{< tabs >}}
 {{% tab title="ThunderBio_v3" %}}

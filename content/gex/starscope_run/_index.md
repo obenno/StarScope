@@ -117,95 +117,6 @@ process {
 }
 ```
 {{% /tab %}}
-{{% tab title="example_docker.ThunderBio_v3.config" %}}
-```json
-params {
-  genomeDir = "/refdata/human/starsolo/"
-  genomeGTF = "/refdata/human/refdata-gex-GRCh38-2020-A/genes/genes.gtf"
-  whitelist = "/starscope/whitelist/TB_v3_20240429.BC1.tsv /starscope/whitelist/TB_v3_20240429.BC2.tsv /starscope/whitelist/TB_v3_20240429.BC3.tsv"
-  soloType = "CB_UMI_Complex"
-  trimLength = 50
-  soloAdapterSequence = "NNNNNNNNNGTGANNNNNNNNNGACANNNNNNNNNNNNNNNNN"
-  soloCBposition = "2_0_2_8 2_13_2_21 2_26_2_34"
-  soloUMIposition = "2_35_2_42"
-  soloCBmatchWLtype = "1MM"
-  publishSaturation = true
-}
-
-// uncomment line below if using slurm, see https://www.nextflow.io/docs/latest/executor.html
-// process.executor = 'slurm'
-
-// uncomment below chunk if using conda
-// process.conda = "/home/xzx/Tools/mambaforge/envs/starscope_scRNAseq_env"
-// conda.enabled = true
-
-// docker setting, comment chunk below if using conda
-process.container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scrnaseq_env:1.2.5"
-docker.enabled = true
-docker.userEmulation = true
-docker.runOptions = '--init -u $(id -u):$(id -g) $(opt=""; for group in $(id -G); do opt=$opt" --group-add $group"; done; echo $opt)'
-
-// Resouces for each process
-process {
-  withLabel: process_high {
-    cpus = 16
-    memory = 40.GB
-  }
-  withLabel: process_medium {
-    cpus = 4
-    memory = 20.GB
-  }
-  withLabel: process_low {
-    cpus = 4
-    memory = 20.GB
-  }
-    withLabel: process_high {
-    cpus = 32
-    memory = 32.GB
-  }
-  withLabel: process_medium {
-    cpus = 32
-    memory = 20.GB
-  }
-  withLabel: process_low {
-    cpus = 4
-    memory = 20.GB
-  }
-  withName: CHECK_SATURATION {
-    cpus = 4
-    memory = 10.GB
-  }
-  withName: CAT_FASTQ {
-    cpus = 2
-    memory = 4.GB
-  }
-  withName: TRIM_FASTQ {
-    cpus = 12
-    memory = 20.GB
-  }
-  withName: MULTIQC {
-    cpus = 4
-    memory = 10.GB
-  }
-  withName: STARSOLO {
-    cpus = 16
-    memory = 40.GB
-  }
-  withName: REPORT {
-    cpus = 4
-    memory = 40.GB
-  }
-  withName: FEATURESTATS {
-    cpus = 2
-    memory = 8.GB
-  }
-  withName: GENECOVERAGE {
-    cpus = 8
-    memory = 10.GB
-  }
-}
-```
-{{% /tab %}}
 {{% tab title="example_docker.10X_v3.config" %}}
 ```json
 params {
@@ -299,7 +210,7 @@ process {
 
 ### Invoke with command line options
 
-To invoke scATAC pipeline with conda environment:
+To invoke scRNA-seq pipeline with conda environment:
 
 {{< tabs >}}
 {{% tab title="ThunderBio_v2" %}}
