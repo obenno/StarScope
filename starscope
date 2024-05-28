@@ -609,6 +609,10 @@ gex(){
                 local noDepCheck=true
                 shift 1
                 ;;
+            "--whitelist")
+                local whitelist=$2
+                shift 2
+                ;;
             *)
                 nextflowOpt="$nextflowOpt $1"
                 shift 1
@@ -632,6 +636,7 @@ gex(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -644,6 +649,7 @@ gex(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_gex"
@@ -718,6 +724,10 @@ vdj_gex(){
                 local run_mem=$2
                 shift 2
                 ;;
+            "--whitelist")
+                local whitelist=$2
+                shift 2
+                ;;
             "--noDepCheck")
                 local noDepCheck=true
                 shift 1
@@ -745,6 +755,7 @@ vdj_gex(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -756,6 +767,7 @@ vdj_gex(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_gex"
@@ -830,6 +842,10 @@ atac(){
                 local run_mem=$2
                 shift 2
                 ;;
+            "--whitelist")
+                local whitelist=$2
+                shift 2
+                ;;
             "--noDepCheck")
                 local noDepCheck=true
                 shift 1
@@ -857,6 +873,7 @@ atac(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -868,6 +885,7 @@ atac(){
             cat <<-EOF > $configFile
 			process {
 			  executor = "$executor"
+			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_atac"
