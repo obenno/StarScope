@@ -634,9 +634,11 @@ gex(){
         then
             check_conda
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -647,9 +649,11 @@ gex(){
         then
             check_docker "gex"
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_gex"
@@ -753,9 +757,11 @@ vdj_gex(){
         then
             check_conda
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -765,9 +771,11 @@ vdj_gex(){
         then
             check_docker "vdj_gex"
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_gex"
@@ -871,9 +879,11 @@ atac(){
         then
             check_conda
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  conda = "$conda_env_path"
@@ -883,9 +893,11 @@ atac(){
         then
             check_docker "atac"
             cat <<-EOF > $configFile
+			params {
+			  whitelist = "$whitelist"
+			}
 			process {
 			  executor = "$executor"
-			  whitelist = "$whitelist"
 			  cpus   = $run_cpus
 			  memory = $run_mem
 			  container = "$docker_image_atac"
@@ -1035,16 +1047,16 @@ case $subcommand in
         usage
         ;;
     "gex")
-        gex $@
+        gex "$@"
         ;;
     "mkref")
-        mkref $@
+        mkref "$@"
         ;;
     "vdj_gex")
-        vdj_gex $@
+        vdj_gex "$@"
         ;;
     "atac")
-        atac $@
+        atac "$@"
         ;;
     "-v" | "--version" | "-version")
         cat <<-EOF
