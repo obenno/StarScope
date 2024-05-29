@@ -40,6 +40,27 @@ sample,fastq_1,fastq_2,fastq_3
 All samples in the sampleList will use the same options. Therefore, a combination of samples from different species is not supported.
 {{% /notice %}}
 
+
+{{% notice style="warning" %}}
+We found that [seq library](https://github.com/exaloop/seq) doesn't support fastq file with quality 
+score larger than 40 (denoted as **J** in the fourth line). Please check the quality encoding
+on [FASTQ wiki page](https://en.wikipedia.org/wiki/FASTQ_format). The error message is like:
+
+```
+KeyError: J
+
+Raised from: std.internal.types.collections.dict.Dict.__getitem__:0
+/pipeline/starscope/scATAC-seq/codon/lib/codon/stdlib/internal/types/collections/dict.codon:74:9
+/scATAC_test/work/09/284782e6058425c6966542b7a70944/.command.sh: line 9: 684639 Aborted                 (core dumped) /pipeline/starscope/scATAC-seq/codon/bin/codon run -release -plugin seq /pipeline/starscope/scATAC-seq/bin/extract_and_correct_thunderbio_barcode_from_fastq.codon TB_v3_20240429.BC1.tsv,TB_v3_20240429.BC2.tsv,TB_v3_20240429.BC3.tsv test_sample_1.merged.fq.gz test_sample_2.merged.fq.gz test_sample_1.barcode.fq test_sample_2.barcode.fq test_sample_barcode_stats.tsv 8
+```
+
+User could use the command below to convert "J" (Q=41) to "I" (Q=40):
+
+```bash
+for i in *.fq.gz; do zcat $i | awk 'NR%4==1{print; getline; print; getline; print; getline; gsub("J", "I"); print}' | gzip -c > ${i%%.fq.gz}".modified.fq.gz"; done
+```
+{{% /notice %}}
+ 
 ## Command
 
 ### Invoke with config file
