@@ -366,49 +366,49 @@ atac_usage(){
 	Example ThunderBio sampleList.csv:
 
 	sample,fastq_1,fastq_2
-	atac_sample1,atac.R1.fq.gz,atac.R2.fq.gz
+atac_sample1,atac.R1.fq.gz,atac.R2.fq.gz
 
-	Example 10X sampleList.csv:
+Example 10X sampleList.csv:
 
-	sample,fastq_1,fastq_2,fastq_3
-	10x_sample1,s1.R1.fq.gz,s1.R2.fq.gz,s3.R3.fq.gz
+sample,fastq_1,fastq_2,fastq_3
+10x_sample1,s1.R1.fq.gz,s1.R2.fq.gz,s3.R3.fq.gz
 
-	For ThunderBio chemistry v3:
+For ThunderBio chemistry v3:
 
-	starscope <atac> --conda \\
-	                 --conda_env /path/to/conda/env \\
-	                 --input sampleList.csv \\
-	                 --bwaIndex /path/to/STAR/reference/dir \\
-	                 --genomeGTF /path/to/genomeGTF \\
-	                 --whitelist "/path/to/BC1.tsv /path/to/BC2.tsv /path/to/BC3.tsv" \\
-	                 --refGenome hg38 \\
-	                 --platform TB
+starscope <atac> --conda \\
+                    --conda_env /path/to/conda/env \\
+                    --input sampleList.csv \\
+                    --bwaIndex /path/to/STAR/reference/dir \\
+                    --genomeGTF /path/to/genomeGTF \\
+                    --whitelist "/path/to/BC1.tsv /path/to/BC2.tsv /path/to/BC3.tsv" \\
+                    --refGenome hg38 \\
+                    --platform TB
 
-	For 10X dataset:
+For 10X dataset:
 
-	starscope <atac> --conda \\
-	                 --conda_env /path/to/conda/env \\
-	                 --input sampleList.csv \\
-	                 --bwaIndex /path/to/STAR/reference/dir \\
-	                 --genomeGTF /path/to/genomeGTF \\
-	                 --whitelist /path/to/10x_whitelist \\
-	                 --refGenome hg38 \\
-	                 --platform 10X
+starscope <atac> --conda \\
+                    --conda_env /path/to/conda/env \\
+                    --input sampleList.csv \\
+                    --bwaIndex /path/to/STAR/reference/dir \\
+                    --genomeGTF /path/to/genomeGTF \\
+                    --whitelist /path/to/10x_whitelist \\
+                    --refGenome hg38 \\
+                    --platform 10X
 
 
-	options:
-	  --conda                   Use conda env to run (true)
+options:
+    --conda                   Use conda env to run (true)
 
-	  --conda_env               Please specify conda env path if using conda (null)
+    --conda_env               Please specify conda env path if using conda (null)
 
-	  --docker                  Use docker container to run
+    --docker                  Use docker container to run
 
-	  --input                   Input sample list, csv format, required
-	                            columns include "sample" for sampleName,
-	                            "fastq_1" for read1, "fastq_2" for read2,
-	                            "fastq_3" is only required for 10X data
+    --input                   Input sample list, csv format, required
+                            columns include "sample" for sampleName,
+                            "fastq_1" for read1, "fastq_2" for read2,
+                            "fastq_3" is only required for 10X data
 
-	  --bwaIndex                Path of BWA reference index path, including prefix
+    --bwaIndex                Path of BWA reference index path, including prefix
 
 	  --genomeGTF               Path of reference genome GTF file
 
@@ -766,6 +766,7 @@ vdj_gex(){
 			  memory = $run_mem
 			  conda = "$conda_env_path"
 			}
+			conda.enabled = true
 			EOF
         elif [[ $run_env == "docker" ]]
         then
@@ -888,6 +889,7 @@ atac(){
 			  memory = $run_mem
 			  conda = "$conda_env_path"
 			}
+			conda.enabled = true
 			EOF
         elif [[ $run_env == "docker" ]]
         then
@@ -1004,6 +1006,7 @@ mkref(){
 			  memory = $run_mem
 			  conda = "$conda_env_path"
 			}
+			conda.enabled = true
 			EOF
         elif [[ $run_env == "docker" ]]
         then
