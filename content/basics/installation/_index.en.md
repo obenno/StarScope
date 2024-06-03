@@ -52,7 +52,7 @@ ln -s starscope/nextflow ~/.local/bin/nextflow
 Confirm that nextflow runs properly with the command below (require network access to github):
 
 ```bash
-NXF_VER=22.04.5 nextflow run hello
+NXF_VER=23.10.1 nextflow run hello
 ```
 
 The output will be:
