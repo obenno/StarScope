@@ -555,7 +555,7 @@ check_docker(){
 gex(){
     ## run the pipeline
     ## set default value of some parameters
-    local nextflowOpt=""
+    local nextflowOpt=()
     local run_cpus=8
     local run_mem="32.GB"
     local run_env="conda" # conda as default
@@ -613,8 +613,12 @@ gex(){
                 local whitelist=$2
                 shift 2
                 ;;
+            "--soloCBposition")
+                local soloCBposition=$2
+                shift 2
+                ;;
             *)
-                nextflowOpt="$nextflowOpt $1"
+                nextflowOpt+=("$1")
                 shift 1
                 ;;
         esac
@@ -636,6 +640,7 @@ gex(){
             cat <<-EOF > $configFile
 			params {
 			  whitelist = "$whitelist"
+			  soloCBposition = "$soloCBposition"
 			}
 			process {
 			  executor = "$executor"
@@ -651,6 +656,7 @@ gex(){
             cat <<-EOF > $configFile
 			params {
 			  whitelist = "$whitelist"
+			  soloCBposition = "$soloCBposition"
 			}
 			process {
 			  executor = "$executor"
@@ -671,14 +677,14 @@ gex(){
 
     echo "Using local config as : $configFile"
     echo "nextflow command:"
-    echo "nextflow run scRNA-seq -c $configFile $nextflowOpt"
-    $nextflow run $DIR/scRNA-seq -c $configFile $nextflowOpt
+    echo "nextflow run scRNA-seq -c $configFile ${nextflowOpt[@]}"
+    $nextflow run $DIR/scRNA-seq -c $configFile ${nextflowOpt[@]}
 }
 
 vdj_gex(){
     ## run the pipeline
     ## set default value of some parameters
-    local nextflowOpt=""
+    local nextflowOpt=()
     local run_cpus=8
     local run_mem="32.GB"
     local run_env="conda" # conda as default
@@ -732,12 +738,16 @@ vdj_gex(){
                 local whitelist=$2
                 shift 2
                 ;;
+            "--soloCBposition")
+                local soloCBposition=$2
+                shift 2
+                ;;
             "--noDepCheck")
                 local noDepCheck=true
                 shift 1
                 ;;
             *)
-                nextflowOpt="$nextflowOpt $1"
+                nextflowOpt+=("$1")
                 shift 1
                 ;;
         esac
@@ -759,6 +769,7 @@ vdj_gex(){
             cat <<-EOF > $configFile
 			params {
 			  whitelist = "$whitelist"
+			  soloCBposition = "$soloCBposition"
 			}
 			process {
 			  executor = "$executor"
@@ -774,6 +785,7 @@ vdj_gex(){
             cat <<-EOF > $configFile
 			params {
 			  whitelist = "$whitelist"
+			  soloCBposition = "$soloCBposition"
 			}
 			process {
 			  executor = "$executor"
@@ -794,14 +806,14 @@ vdj_gex(){
 
     echo "Using local config as : $configFile"
     echo "nextflow command:"
-    echo "nextflow run scRNA-seq -c $configFile -entry vdj $nextflowOpt"
-    $nextflow run $DIR/scRNA-seq -c $configFile -entry vdj $nextflowOpt
+    echo "nextflow run scRNA-seq -c $configFile -entry vdj ${nextflowOpt[@]}"
+    $nextflow run $DIR/scRNA-seq -c $configFile -entry vdj ${nextflowOpt[@]}
 }
 
 atac(){
     ## run the pipeline
     ## set default value of some parameters
-    local nextflowOpt=""
+    local nextflowOpt=()
     local run_cpus=8
     local run_mem="32.GB"
     local run_env="conda" # conda as default
@@ -860,7 +872,7 @@ atac(){
                 shift 1
                 ;;
             *)
-                nextflowOpt="$nextflowOpt $1"
+                nextflowOpt+=("$1")
                 shift 1
                 ;;
         esac
@@ -917,8 +929,8 @@ atac(){
 
     echo "Using local config as : $configFile"
     echo "nextflow command:"
-    echo "nextflow run scATAC-seq -c $configFile $nextflowOpt"
-    $nextflow run $DIR/scATAC-seq -c $configFile $nextflowOpt
+    echo "nextflow run scATAC-seq -c $configFile ${nextflowOpt[@]}"
+    $nextflow run $DIR/scATAC-seq -c $configFile ${nextflowOpt[@]}
 }
 
 mkref(){
