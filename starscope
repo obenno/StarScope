@@ -32,7 +32,7 @@ NC='\033[0m' # No Color
 gex_version=$(grep "manifest.version" $DIR/scRNA-seq/nextflow.config | awk '{print $NF}' | sed 's/\"//g')
 vdj_gex_version="$gex_version"
 atac_version=$(grep "manifest.version" $DIR/scATAC-seq/nextflow.config | awk '{print $NF}' | sed 's/\"//g')
-starscope_version="v20240429"
+starscope_version="v20241021"
 
 conda_executable="conda"
 conda_env_path=""
