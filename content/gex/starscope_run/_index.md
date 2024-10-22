@@ -31,9 +31,9 @@ All samples in the sampleList will use the same options. Therefore, a combinatio
 
 Due to the abundance of processes and options, we suggest utilizing a custom 
 configuration file when invoking the pipeline. This allows for greater 
-control over resource management. ThunderBio has released two versions of the 
-chemistry, each with a distinct barcode structure. Please refer to the 
-corresponding configuration examples provided below.
+control over resource management. Please refer to the corresponding 
+configuration examples below to utilize docker or [singularity](https://docs.sylabs.io/guides/4.2/user-guide/quick_start.html) 
+as running environment.
 
 ```
 starscope gex --input sampleList.csv --config example_docker.config
@@ -67,6 +67,78 @@ process.container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope
 docker.enabled = true
 docker.userEmulation = true
 docker.runOptions = '--init -u $(id -u):$(id -g) $(opt=""; for group in $(id -G); do opt=$opt" --group-add $group"; done; echo $opt)'
+
+// Resouces for each process
+process {
+  withLabel: process_high {
+    cpus = 16
+    memory = 40.GB
+  }
+  withLabel: process_medium {
+    cpus = 4
+    memory = 20.GB
+  }
+  withLabel: process_low {
+    cpus = 4
+    memory = 20.GB
+  }
+  withName: CHECK_SATURATION {
+    cpus = 4
+    memory = 10.GB
+  }
+  withName: CAT_FASTQ {
+    cpus = 2
+    memory = 4.GB
+  }
+  withName: TRIM_FASTQ {
+    cpus = 12
+    memory = 20.GB
+  }
+  withName: MULTIQC {
+    cpus = 4
+    memory = 10.GB
+  }
+  withName: STARSOLO {
+    cpus = 16
+    memory = 40.GB
+  }
+  withName: REPORT {
+    cpus = 4
+    memory = 40.GB
+  }
+  withName: FEATURESTATS {
+    cpus = 2
+    memory = 8.GB
+  }
+  withName: GENECOVERAGE {
+    cpus = 8
+    memory = 10.GB
+  }
+}
+```
+{{% /tab %}}
+{{% tab title="example_singularity.ThunderBio_v2.config" %}}
+```json
+params {
+  genomeDir = "/refdata/human/starsolo/"
+  genomeGTF = "/refdata/human/refdata-gex-GRCh38-2020-A/genes/genes.gtf"
+  whitelist = "starscope/whitelist/V2_barcode_seq_210407_concat.txt"
+  trimLength = 50
+  soloType = "CB_UMI_Simple"
+  soloCBstart = 1
+  soloCBlen = 29
+  soloUMIstart = 30
+  soloUMIlen = 10
+  publishSaturation = true
+}
+
+// uncomment line below if using slurm, see https://www.nextflow.io/docs/latest/executor.html
+// process.executor = 'slurm'
+
+// command below generate singularity image: starscope_scrnaseq_env_latest.sif
+// singularity pull registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scrnaseq_env:latest
+process.container = "starscope_scrnaseq_env_latest.sif"
+singularity.enabled = true
 
 // Resouces for each process
 process {
