@@ -95,7 +95,7 @@ params {
 // conda.enabled = true
 
 // docker setting, comment chunk below if using conda
-process.container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scatac_env:0.0.6"
+process.container = "registry-intl.cn-hangzhou.aliyuncs.com/thunderbio/starscope_scatac_env:latest"
 docker.enabled = true
 docker.userEmulation = true
 docker.runOptions = '--init -u $(id -u):$(id -g) $(for group in $(id -G); do echo "--group-add $group"; done)'
