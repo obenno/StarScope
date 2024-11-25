@@ -1,7 +1,8 @@
 [submodule "scRNA-seq"]
 	path = scRNA-seq
 	url = https://github.com/obenno/scRNA-seq
-	branch = main
+	branch = "main"
 [submodule "scATAC-seq"]
 	path = scATAC-seq
 	url = https://github.com/obenno/scATAC-seq
+	branch = "main"
