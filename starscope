@@ -229,6 +229,9 @@ mkref_usage(){
 	                    outdir/refoutDir, which by default is
 	                    results/STAR_reference
 
+	  --mkrefOpt        Additional options parsed to STAR when generating
+	                    genome indexes. e.g. "--genomeSAsparseD 3"
+
 	  --config          Provide a custom nextflow config file to
 	                    define all parameters
 
